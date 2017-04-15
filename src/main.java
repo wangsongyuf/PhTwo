@@ -112,6 +112,9 @@ public class main {
 					state=State.waitingRightChop;
 				}
 			}else if(state==State.waitingRightChop){
+				if(server.rightread.isEmpty()){
+					continue;
+				}
 				String s=server.rightread.pop();
 				if(s.contains("true")){
 					state=State.hungry;
@@ -127,6 +130,9 @@ public class main {
 					}
 				}
 			}else if(state==State.waitingLeftChop){
+				if(server.leftread.isEmpty()){
+					continue;
+				}
 				String s=server.leftread.pop();
 				if(s.contains("true")){
 					state=State.hungry;
@@ -175,6 +181,9 @@ public class main {
 				sleepcount=40;
 				state=State.thinking;
 			}else if(state==State.waitingCup){
+				if(server.rightread.isEmpty()){
+					continue;
+				}
 				String s=server.rightread.pop();
 				if(s.equals("true")){
 					state=State.thristy;
