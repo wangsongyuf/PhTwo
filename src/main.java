@@ -58,27 +58,27 @@ public class main {
 						}
 					} else if (peek.equals("othertrue")) {
 						if (drinkaskcount == 5) {
-							client.rightwrite.add(peek + ",");
+							client.rightwrite.add(peek + "\n");
 						} else {
 							state = State.thristy;
 						}
 						server.leftread.pop();
 					} else if (peek.equals("otherfalse")) {
 						if (drinkaskcount == 5) {
-							client.rightwrite.add(peek + ",");
+							client.rightwrite.add(peek + "\n");
 						} else {
 							drinkaskcount--;
 						}
 						server.leftread.pop();
 					} else if (peek.equals("cup")) {
-						client.leftwrite.add(cup + ",");
-						client.rightwrite.add("othercup,");
+						client.leftwrite.add(cup + "\n");
+						client.rightwrite.add("othercup\n");
 						server.leftread.pop();
 					} else if (peek.equals("othercup")) {
-						client.leftwrite.add("other" + cup + ",");
+						client.leftwrite.add("other" + cup + "\n");
 						server.leftread.pop();
 					} else if (peek.equals("chop")) {
-						client.leftwrite.add(leftChop + ",");
+						client.leftwrite.add(leftChop + "\n");
 						server.leftread.pop();
 					} else {
 						server.leftread.pop();
@@ -93,27 +93,27 @@ public class main {
 						}
 					} else if (peek.equals("othertrue")) {
 						if (drinkaskcount == 5) {
-							client.leftwrite.add(peek + ",");
+							client.leftwrite.add(peek + "\n");
 						} else {
 							state = State.thristy;
 						}
 						server.rightread.pop();
 					} else if (peek.equals("otherfalse")) {
 						if (drinkaskcount == 5) {
-							client.leftwrite.add(peek + ",");
+							client.leftwrite.add(peek + "\n");
 						} else {
 							drinkaskcount--;
 						}
 						server.rightread.pop();
 					} else if (peek.equals("cup")) {
-						client.rightwrite.add(cup + ",");
-						client.leftwrite.add("othercup,");
+						client.rightwrite.add(cup + "\n");
+						client.leftwrite.add("othercup\n");
 						server.rightread.pop();
 					} else if (peek.equals("othercup")) {
-						client.rightwrite.add("other" + cup + ",");
+						client.rightwrite.add("other" + cup + "\n");
 						server.rightread.pop();
 					} else if (peek.equals("chop")) {
-						client.rightwrite.add(rightChop + ",");
+						client.rightwrite.add(rightChop + "\n");
 						server.rightread.pop();
 					} else {
 						server.rightread.pop();
@@ -122,10 +122,10 @@ public class main {
 			}
 			if ((rand == 4 || rand == 6) && state == State.hungry) {
 				if (rand == 4) {
-					client.leftwrite.add("chop,");
+					client.leftwrite.add("chop\n");
 					state = State.waitingLeftChop;
 				} else if (rand == 6) {
-					client.rightwrite.add("chop,");
+					client.rightwrite.add("chop\n");
 					state = State.waitingRightChop;
 				}
 			} else if (state == State.waitingRightChop) {
@@ -174,7 +174,7 @@ public class main {
 				state = State.thristy;
 			} else if (rand == 5 && state == State.thristy) {
 				drinkaskcount--;
-				client.rightwrite.add("cup,");
+				client.rightwrite.add("cup\n");
 				state = State.waitingCup;
 			} else if (drinkaskcount == 0 && state == State.waitingCup) {
 				cup = true;
