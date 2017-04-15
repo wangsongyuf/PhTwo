@@ -42,10 +42,11 @@ public class main {
 		System.out.println("before client start");
 		t2.start();
 		System.out.println("generate number");
+		Thread.sleep(10000L);
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {
-			System.out.println(rand+","+state);
+//			System.out.println(rand+","+state);
 			if(state!=State.sleeping){
 				while(!server.leftread.isEmpty()){
 					String peek=server.leftread.peek();
