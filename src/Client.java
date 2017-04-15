@@ -9,7 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
 
 public class Client implements Runnable {
-	 public ArrayDeque<String> leftwrite = new ArrayDeque<>();
+	public ArrayDeque<String> leftwrite = new ArrayDeque<>();
 	public ArrayDeque<String> rightwrite = new ArrayDeque<>();
 	String leftaddress, rightaddress;
 	int port;
@@ -49,7 +49,18 @@ public class Client implements Runnable {
 			
 			System.out.println("start write");
 			while(true){
+				System.out.println("---------------------------------------------------");
+				for(String s:leftwrite){
+					System.out.println("leftToWrite: "+s);
+				}
+				for(String s:rightwrite){
+					System.out.println("rightToWrite: "+s);
+				}
+				System.out.println("---------------------------------------------------");
+				
+			int count=0;
 			for (String s : leftwrite) {
+				count++;
 				
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
@@ -57,10 +68,13 @@ public class Client implements Runnable {
 
 				buf.flip();
 				left.write(buf);
-				System.out.println("leftwrite:"+s);
 				
 			}
-			leftwrite.clear();
+			while(count!=0){
+				leftwrite.pop();
+				count--;
+			}
+			 count=0;
 			for (String s : rightwrite) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
@@ -68,9 +82,11 @@ public class Client implements Runnable {
 
 				buf.flip();
 				right.write(buf);
-				System.out.println("rightwrite:"+s);
 			}
-			rightwrite.clear();}
+			while(count!=0){
+				rightwrite.pop();
+				count--;
+			}}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
