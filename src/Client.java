@@ -24,16 +24,29 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			Thread.sleep(10000L);
-			System.out.println("try to connect server");
-			SocketChannel left = SocketChannel.open();
-			left.configureBlocking(true);
-			left.connect(new InetSocketAddress(leftaddress, port));
-			left.configureBlocking(false);
-			SocketChannel right = SocketChannel.open();
-			right.configureBlocking(true);
-			right.connect(new InetSocketAddress(rightaddress, port));
-			right.configureBlocking(false);
+//			System.out.println("try to connect server");
+//			SocketChannel left = SocketChannel.open();
+//			left.configureBlocking(true);
+//			left.connect(new InetSocketAddress(leftaddress, port));
+//			left.configureBlocking(false);
+//			SocketChannel right = SocketChannel.open();
+//			right.configureBlocking(true);
+//			right.connect(new InetSocketAddress(rightaddress, port));
+//			right.configureBlocking(false);
+//			
 			
+			Socket leftSock = null;
+	DataOutputStream leftOutputStr = null;
+			BufferedReader leftInputStr = null;
+				Socket rightSock = null;
+		DataOutputStream rightOutputStr = null;
+			BufferedReader rightInputStr = null;
+			leftSock = new Socket(leftaddress, port);
+				leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
+			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
+			rightSock = new Socket(rightaddress, port);
+			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
+			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
 			System.out.println("start write");
 			while(true){
 				if(leftwrite.size()>0||rightwrite.size()>0){
@@ -50,12 +63,12 @@ public class Client implements Runnable {
 			for (String s : leftwrite) {
 				count++;
 				
-				ByteBuffer buf = ByteBuffer.allocate(1024);
-				buf.clear();
-				buf.put(s.getBytes());
-
-				buf.flip();
-				left.write(buf);
+//				ByteBuffer buf = ByteBuffer.allocate(1024);
+//				buf.clear();
+//				buf.put(s.getBytes());
+//
+//				buf.flip();
+				leftOutputStr.writeBytes(s);
 				
 			}
 			while(count!=0){
@@ -65,12 +78,12 @@ public class Client implements Runnable {
 			 count=0;
 			for (String s : rightwrite) {
 				count++;
-				ByteBuffer buf = ByteBuffer.allocate(1024);
-				buf.clear();
-				buf.put(s.getBytes());
-
-				buf.flip();
-				right.write(buf);
+//				ByteBuffer buf = ByteBuffer.allocate(1024);
+//				buf.clear();
+//				buf.put(s.getBytes());
+//
+//				buf.flip();
+				rightOutputStr.writeBytes(s);
 			}
 			while(count!=0){
 				rightwrite.pop();
