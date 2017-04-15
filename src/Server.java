@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
@@ -28,58 +29,95 @@ class Server implements Runnable {
 	@Override
 	public void run() {
 
+		try {
+
+			// Socket leftserver = null;
+			// Socket rightserver = null;
+			// ServerSocket servSock = null;
+			// servSock = new ServerSocket(port);
+			// Socket clientSockone = servSock.accept();
+			// if
+			// (clientSockone.getInetAddress().toString().equals(leftaddress)) {
+			// leftserver = clientSockone;
+			// } else {
+			// rightserver = clientSockone;
+			// }
+			//
+			// Socket clientSocktwo = servSock.accept();
+			//
+			// if
+			// (clientSocktwo.getInetAddress().toString().equals(rightaddress))
+			// {
+			// rightserver = clientSocktwo;
+			// } else {
+			// leftserver = clientSocktwo;
+			// }
+			// BufferedReader leftinputStr;
+			// DataOutputStream leftoutputStr;
+			// String rightinputLine;
+			// BufferedReader rightinputStr;
+			// DataOutputStream rightoutputStr;
+			// leftinputStr = new BufferedReader(new
+			// InputStreamReader(leftserver.getInputStream()));
+			// leftoutputStr = new
+			// DataOutputStream(leftserver.getOutputStream());
+			// rightinputStr = new BufferedReader(new
+			// InputStreamReader(rightserver.getInputStream()));
+			// rightoutputStr = new
+			// DataOutputStream(rightserver.getOutputStream());
+
+			ServerSocketChannel server = ServerSocketChannel.open();
+			server.socket().bind(new InetSocketAddress(port));
+			server.configureBlocking(false);
+
+			SocketChannel leftserver = null;
+			SocketChannel rightserver = null;
 		
-			
-			try {
-				
-				Socket leftserver = null;
-				Socket rightserver = null;
-				ServerSocket servSock = null;
-				servSock = new ServerSocket(port);
-				Socket clientSockone = servSock.accept();
-				if (clientSockone.getInetAddress().toString().equals(leftaddress)) {
+				SocketChannel clientSockone = server.accept();
+				while(clientSockone==null){
+					
+				}
+				if (clientSockone.getRemoteAddress().toString().equals(leftaddress)) {
 					leftserver = clientSockone;
 				} else {
 					rightserver = clientSockone;
 				}
 
-				Socket clientSocktwo = servSock.accept();
-
-				if (clientSocktwo.getInetAddress().toString().equals(rightaddress)) {
+				SocketChannel clientSocktwo = server.accept();
+while(clientSockone==null){
+					
+				}
+				if (clientSocktwo.getRemoteAddress().toString().equals(rightaddress)) {
 					rightserver = clientSocktwo;
 				} else {
 					leftserver = clientSocktwo;
 				}
-				BufferedReader leftinputStr;
-				DataOutputStream leftoutputStr;
-				String rightinputLine;
-				BufferedReader rightinputStr;
-				DataOutputStream rightoutputStr;
-				leftinputStr = new BufferedReader(new InputStreamReader(leftserver.getInputStream()));
-				leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
-				rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
-				rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
-
-				// start
-				while (true) {
-					String temp = leftinputStr.readLine();
-					while (temp != null) {
-						leftread.add(temp);
+			
+			// start
+			while (true) {
+				ByteBuffer buf = ByteBuffer.allocate(1024);
+				buf.clear();
+				int bytesRead = leftserver.read(buf);
+				if (bytesRead != -1) {
+					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("\n")) {
+						leftread.add(s);
 					}
-					temp = rightinputStr.readLine();
-					while (temp != null) {
-						rightread.add(temp);
-					}}
-
-			} catch (IOException e) {
-				System.out.println(e);
+					buf.clear();
+				}
+				buf.clear();
+				bytesRead = rightserver.read(buf);
+				if (bytesRead != -1) {
+					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("n")) {
+						rightread.add(s);
+					}
+					buf.clear();
+				}
 			}
-			
-			
-		
-		
-				
+
+		} catch (IOException e) {
+			System.out.println(e);
+		}
+
 	}
-		
 
 };
