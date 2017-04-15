@@ -28,13 +28,12 @@ class Server implements Runnable {
 	@Override
 	public void run() {
 
-		try {
-			// server setup
-			
 		
-			Socket leftserver = null;
-			Socket rightserver = null;
+			
 			try {
+				
+				Socket leftserver = null;
+				Socket rightserver = null;
 				ServerSocket servSock = null;
 				servSock = new ServerSocket(port);
 				Socket clientSockone = servSock.accept();
@@ -51,38 +50,36 @@ class Server implements Runnable {
 				} else {
 					leftserver = clientSocktwo;
 				}
+				BufferedReader leftinputStr;
+				DataOutputStream leftoutputStr;
+				String rightinputLine;
+				BufferedReader rightinputStr;
+				DataOutputStream rightoutputStr;
+				leftinputStr = new BufferedReader(new InputStreamReader(leftserver.getInputStream()));
+				leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
+				rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
+				rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
+
+				// start
+				while (true) {
+					String temp = leftinputStr.readLine();
+					while (temp != null) {
+						leftread.add(temp);
+					}
+					temp = rightinputStr.readLine();
+					while (temp != null) {
+						rightread.add(temp);
+					}}
 
 			} catch (IOException e) {
 				System.out.println(e);
 			}
-			BufferedReader leftinputStr;
-			DataOutputStream leftoutputStr;
-			String rightinputLine;
-			BufferedReader rightinputStr;
-			DataOutputStream rightoutputStr;
-			leftinputStr = new BufferedReader(new InputStreamReader(leftserver.getInputStream()));
-			leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
-			rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
-			rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
+			
 			
 		
 		
-			// start
-			while (true) {
-				String temp = leftinputStr.readLine();
-				while (temp != null) {
-					leftread.add(temp);
-				}
-				temp = rightinputStr.readLine();
-				while (temp != null) {
-					rightread.add(temp);
-				}
 				
-
-			}
-		} catch (IOException  e) {
-			e.printStackTrace();
-		} 
 	}
+		
 
 };
