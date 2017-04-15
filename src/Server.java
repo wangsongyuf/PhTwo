@@ -30,15 +30,13 @@ class Server implements Runnable {
 
 		try {
 			// server setup
-			ServerSocket servSock = null;
-			try {
-				servSock = new ServerSocket(port);
-			} catch (IOException e) {
-				System.err.println(e);
-			}
+			
+		
 			Socket leftserver = null;
 			Socket rightserver = null;
 			try {
+				ServerSocket servSock = null;
+				servSock = new ServerSocket(port);
 				Socket clientSockone = servSock.accept();
 				if (clientSockone.getInetAddress().toString().equals(leftaddress)) {
 					leftserver = clientSockone;
