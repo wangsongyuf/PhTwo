@@ -41,9 +41,16 @@ public class Client implements Runnable {
 			SocketChannel left = SocketChannel.open();
 			left.configureBlocking(false);
 			left.connect(new InetSocketAddress(leftaddress, port));
+			while(!left.isConnected()){
+				left.connect(new InetSocketAddress(leftaddress, port));
+			}
 			SocketChannel right = SocketChannel.open();
 			right.configureBlocking(false);
 			right.connect(new InetSocketAddress(rightaddress, port));
+			while(!right.isConnected()){
+				right.connect(new InetSocketAddress(rightaddress, port));
+			}
+			
 			System.out.println("start write");
 			while(true){
 			for (String s : leftwrite) {
