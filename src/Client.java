@@ -49,6 +49,7 @@ public class Client implements Runnable {
 			
 			System.out.println("start write");
 			while(true){
+				if(leftwrite.size()>0||rightwrite.size()>0){
 				System.out.println("---------------------------------------------------");
 				for(String s:leftwrite){
 					System.out.println("leftToWrite: "+s);
@@ -57,7 +58,7 @@ public class Client implements Runnable {
 					System.out.println("rightToWrite: "+s);
 				}
 				System.out.println("---------------------------------------------------");
-				
+				}
 			int count=0;
 			for (String s : leftwrite) {
 				count++;
