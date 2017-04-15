@@ -57,6 +57,7 @@ public class Client implements Runnable {
 
 				buf.flip();
 				left.write(buf);
+				System.out.println("leftwrite:"+s);
 			}
 			for (String s : rightwrite) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
@@ -65,6 +66,7 @@ public class Client implements Runnable {
 
 				buf.flip();
 				right.write(buf);
+				System.out.println("rightwrite:"+s);
 			}}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
