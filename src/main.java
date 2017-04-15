@@ -46,7 +46,8 @@ public class main {
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {
-//			System.out.println(rand+","+state);
+			 Thread.sleep(1000L);
+			System.out.println(rand+","+state);
 			if(state!=State.sleeping){
 				while(!server.leftread.isEmpty()){
 					String peek=server.leftread.peek();
@@ -113,11 +114,11 @@ public class main {
 			}
 			if((rand==4||rand==6) && state==State.hungry){
 				if(rand==4){
-					client.leftwrite.add("Chop\n");
+					client.leftwrite.add("chop\n");
 					state=State.waitingLeftChop;
 				}
 				else if (rand==6){
-					client.rightwrite.add("Chop\n");
+					client.rightwrite.add("chop\n");
 					state=State.waitingRightChop;
 				}
 			}else if(state==State.waitingRightChop){
@@ -201,7 +202,6 @@ public class main {
 				}
 			}
 			 rand=r.nextInt(10);
-			 Thread.sleep(1000L);
 		}
 		
 
