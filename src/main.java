@@ -78,6 +78,8 @@ public class main {
 					}else if(peek.equals("chop")){
 						client.leftwrite.add(leftChop+"\n");
 						server.leftread.pop();
+					}else{
+						server.leftread.pop();
 					}
 				}
 				while(!server.rightread.isEmpty()){
@@ -108,6 +110,8 @@ public class main {
 						server.rightread.pop();
 					}else if(peek.equals("chop")){
 						client.rightwrite.add(rightChop+"\n");
+						server.rightread.pop();
+					}else{
 						server.rightread.pop();
 					}
 				}
