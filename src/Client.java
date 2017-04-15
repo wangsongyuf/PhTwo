@@ -37,13 +37,14 @@ public class Client implements Runnable {
 //			rightSock = new Socket(rightaddress, port);
 //			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
 //			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
-			
+			System.out.println("try to connect server");
 			SocketChannel left = SocketChannel.open();
 			left.configureBlocking(false);
 			left.connect(new InetSocketAddress(leftaddress, port));
 			SocketChannel right = SocketChannel.open();
 			right.configureBlocking(false);
 			right.connect(new InetSocketAddress(rightaddress, port));
+			System.out.println("start write");
 			while(true){
 			for (String s : leftwrite) {
 				

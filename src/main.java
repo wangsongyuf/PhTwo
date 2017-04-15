@@ -35,8 +35,11 @@ public class main {
 		port = Integer.parseInt(args[2]);
 		Server server=new Server(leftaddress,rightaddress,port);
 		Client client=new Client(leftaddress, rightaddress, port);
+		System.out.println("before server start");
 		server.run();
+		System.out.println("before client start");
 		client.run();
+		System.out.println("generate number");
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {

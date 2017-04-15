@@ -72,7 +72,7 @@ class Server implements Runnable {
 
 			SocketChannel leftserver = null;
 			SocketChannel rightserver = null;
-
+			System.out.println("try to get leftright");
 			SocketChannel clientSockone = server.accept();
 			while (clientSockone == null) {
 				clientSockone = server.accept();
@@ -94,6 +94,7 @@ class Server implements Runnable {
 			}
 
 			// start
+			System.out.println("read");
 			while (true) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
