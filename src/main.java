@@ -35,10 +35,12 @@ public class main {
 		port = Integer.parseInt(args[2]);
 		Server server=new Server(leftaddress,rightaddress,port);
 		Client client=new Client(leftaddress, rightaddress, port);
+		Thread t1 = new Thread(server);
+		Thread t2 = new Thread(client);
 		System.out.println("before server start");
-		server.run();
+		t1.start();
 		System.out.println("before client start");
-		client.run();
+		t2.start();
 		System.out.println("generate number");
 		Random r = new Random();
 		int rand=r.nextInt(10);
