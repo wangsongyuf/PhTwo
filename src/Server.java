@@ -30,20 +30,6 @@ class Server implements Runnable {
 	public void run() {
 
 		try {
-
-			// clients setup
-			Socket leftSock = null;
-			DataOutputStream leftOutputStr = null;
-			BufferedReader leftInputStr = null;
-			Socket rightSock = null;
-			DataOutputStream rightOutputStr = null;
-			BufferedReader rightInputStr = null;
-			leftSock = new Socket(leftaddress, port);
-			leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
-			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
-			rightSock = new Socket(rightaddress, port);
-			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
-			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
 			// server setup
 			ServerSocket servSock = null;
 			try {
@@ -81,6 +67,22 @@ class Server implements Runnable {
 			leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
 			rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
 			rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
+			
+			Thread.sleep(10000L);
+			// clients setup
+			Socket leftSock = null;
+			DataOutputStream leftOutputStr = null;
+			BufferedReader leftInputStr = null;
+			Socket rightSock = null;
+			DataOutputStream rightOutputStr = null;
+			BufferedReader rightInputStr = null;
+			leftSock = new Socket(leftaddress, port);
+			leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
+			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
+			rightSock = new Socket(rightaddress, port);
+			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
+			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
+		
 			// start
 			while (true) {
 				String temp = leftinputStr.readLine();
@@ -100,6 +102,9 @@ class Server implements Runnable {
 
 			}
 		} catch (IOException  e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
