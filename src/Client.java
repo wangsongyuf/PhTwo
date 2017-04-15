@@ -77,6 +77,7 @@ public class Client implements Runnable {
 			}
 			 count=0;
 			for (String s : rightwrite) {
+				count++;
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
 				buf.put(s.getBytes());
