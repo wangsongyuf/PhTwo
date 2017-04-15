@@ -25,9 +25,11 @@ class Server implements Runnable {
 		SocketChannel left;
 		try {
 			left = SocketChannel.open();
-			left.connect(new InetSocketAddress(leftaddress, port));
+			left.bind(new InetSocketAddress(leftaddress, port));
+			left.configureBlocking(false);
 			SocketChannel right = SocketChannel.open();
-			right.connect(new InetSocketAddress(rightaddress, port));
+			right.bind(new InetSocketAddress(rightaddress, port));
+			right.configureBlocking(false);
 			while (!left.finishConnect() && !right.finishConnect()) {
 				ByteBuffer buf = ByteBuffer.allocate(512);
 				buf.clear();
