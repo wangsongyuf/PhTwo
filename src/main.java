@@ -34,6 +34,7 @@ public class main {
 		rightaddress = args[1];
 		port = Integer.parseInt(args[2]);
 		Server server=new Server(leftaddress,rightaddress,port);
+		server.run();
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {
