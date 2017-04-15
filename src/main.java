@@ -34,7 +34,9 @@ public class main {
 		rightaddress = args[1];
 		port = Integer.parseInt(args[2]);
 		Server server=new Server(leftaddress,rightaddress,port);
+		Client client=new Client(leftaddress, rightaddress, port);
 		server.run();
+		client.run();
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {
@@ -47,27 +49,27 @@ public class main {
 						break;}
 					}else if(peek.equals("othertrue")){
 						if(drinkaskcount==5){
-							server.rightwrite.add(peek+"\n");
+							client.rightwrite.add(peek+"\n");
 						}else{
 							state=State.thristy;
 						}
 						server.leftread.pop();
 					}else if(peek.equals("otherfalse")){
 						if(drinkaskcount==5){
-							server.rightwrite.add(peek+"\n");
+							client.rightwrite.add(peek+"\n");
 						}else{
 							drinkaskcount--;
 						}
 						server.leftread.pop();
 					}else if(peek.equals("cup")){
-						server.leftwrite.add(cup+"\n");
-						server.rightwrite.add("othercup\n");
+						client.leftwrite.add(cup+"\n");
+						client.rightwrite.add("othercup\n");
 						server.leftread.pop();
 					}else if(peek.equals("othercup")){
-						server.leftwrite.add("other"+cup+"\n");
+						client.leftwrite.add("other"+cup+"\n");
 						server.leftread.pop();
 					}else if(peek.equals("chop")){
-						server.leftwrite.add(leftChop+"\n");
+						client.leftwrite.add(leftChop+"\n");
 						server.leftread.pop();
 					}
 				}
@@ -78,38 +80,38 @@ public class main {
 						break;}
 					}else if(peek.equals("othertrue")){
 						if(drinkaskcount==5){
-							server.leftwrite.add(peek+"\n");
+							client.leftwrite.add(peek+"\n");
 						}else{
 							state=State.thristy;
 						}
 						server.rightread.pop();
 					}else if(peek.equals("otherfalse")){
 						if(drinkaskcount==5){
-							server.leftwrite.add(peek+"\n");
+							client.leftwrite.add(peek+"\n");
 						}else{
 							drinkaskcount--;
 						}
 						server.rightread.pop();
 					}else if(peek.equals("cup")){
-						server.rightwrite.add(cup+"\n");
-						server.leftwrite.add("othercup\n");
+						client.rightwrite.add(cup+"\n");
+						client.leftwrite.add("othercup\n");
 						server.rightread.pop();
 					}else if(peek.equals("othercup")){
-						server.rightwrite.add("other"+cup+"\n");
+						client.rightwrite.add("other"+cup+"\n");
 						server.rightread.pop();
 					}else if(peek.equals("chop")){
-						server.rightwrite.add(rightChop+"\n");
+						client.rightwrite.add(rightChop+"\n");
 						server.rightread.pop();
 					}
 				}
 			}
 			if((rand==4||rand==6) && state==State.hungry){
 				if(rand==4){
-					server.leftwrite.add("Chop\n");
+					client.leftwrite.add("Chop\n");
 					state=State.waitingLeftChop;
 				}
 				else if (rand==6){
-					server.rightwrite.add("Chop\n");
+					client.rightwrite.add("Chop\n");
 					state=State.waitingRightChop;
 				}
 			}else if(state==State.waitingRightChop){
@@ -158,7 +160,7 @@ public class main {
 				state=State.thristy;
 			}else if(rand==5&&state==State.thristy){
 				drinkaskcount--;
-				server.rightwrite.add("cup\n");
+				client.rightwrite.add("cup\n");
 				state=State.waitingCup;
 			}else if(drinkaskcount==0&&state==State.waitingCup){
 				cup=true;
@@ -176,8 +178,8 @@ public class main {
 				sleepcount--;
 				server.leftread.clear();
 				server.rightread.clear();
-				server.leftwrite.clear();
-				server.rightwrite.clear();
+				client.leftwrite.clear();
+				client.rightwrite.clear();
 			}else if(state==State.sleeping&& sleepcount<=0){
 				sleepcount=40;
 				state=State.thinking;
