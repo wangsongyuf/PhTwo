@@ -59,7 +59,7 @@ class Server implements Runnable {
 			} else {
 				leftserver = clientSocktwo;
 			}
-
+ 
 			// start
 			System.out.println("read");
 			while (true) {
