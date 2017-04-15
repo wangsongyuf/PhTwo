@@ -51,7 +51,6 @@ public class main {
 			if(state!=State.sleeping){
 				while(!server.leftread.isEmpty()){
 					String peek=server.leftread.peek();
-					System.out.println("leftread : "+peek);
 					if(peek.equals("true")||peek.equals("false")){
 						if(state==State.waitingCup||state==State.waitingLeftChop||state==State.waitingRightChop){
 						break;}
@@ -85,7 +84,6 @@ public class main {
 				}
 				while(!server.rightread.isEmpty()){
 					String peek=server.rightread.peek();
-					System.out.println("rightread : "+peek);
 					if(peek.equals("true")||peek.equals("false")){
 						if(state==State.waitingCup||state==State.waitingLeftChop||state==State.waitingRightChop){
 						break;}

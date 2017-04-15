@@ -77,7 +77,7 @@ class Server implements Runnable {
 			while (clientSockone == null) {
 				clientSockone = server.accept();
 			}
-			if (clientSockone.getRemoteAddress().toString().equals(leftaddress)) {
+			if (clientSockone.getRemoteAddress().toString().contains(leftaddress)) {
 				leftserver = clientSockone;
 			} else {
 				rightserver = clientSockone;
@@ -87,7 +87,7 @@ class Server implements Runnable {
 			while (clientSocktwo == null) {
 				clientSocktwo = server.accept();
 			}
-			if (clientSocktwo.getRemoteAddress().toString().equals(rightaddress)) {
+			if (clientSocktwo.getRemoteAddress().toString().contains(rightaddress)) {
 				rightserver = clientSocktwo;
 			} else {
 				leftserver = clientSocktwo;
