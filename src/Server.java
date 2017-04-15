@@ -72,27 +72,27 @@ class Server implements Runnable {
 
 			SocketChannel leftserver = null;
 			SocketChannel rightserver = null;
-		
-				SocketChannel clientSockone = server.accept();
-				while(clientSockone==null){
-					
-				}
-				if (clientSockone.getRemoteAddress().toString().equals(leftaddress)) {
-					leftserver = clientSockone;
-				} else {
-					rightserver = clientSockone;
-				}
 
-				SocketChannel clientSocktwo = server.accept();
-while(clientSockone==null){
-					
-				}
-				if (clientSocktwo.getRemoteAddress().toString().equals(rightaddress)) {
-					rightserver = clientSocktwo;
-				} else {
-					leftserver = clientSocktwo;
-				}
-			
+			SocketChannel clientSockone = server.accept();
+			while (clientSockone == null) {
+				clientSockone = server.accept();
+			}
+			if (clientSockone.getRemoteAddress().toString().equals(leftaddress)) {
+				leftserver = clientSockone;
+			} else {
+				rightserver = clientSockone;
+			}
+
+			SocketChannel clientSocktwo = server.accept();
+			while (clientSocktwo == null) {
+				clientSocktwo = server.accept();
+			}
+			if (clientSocktwo.getRemoteAddress().toString().equals(rightaddress)) {
+				rightserver = clientSocktwo;
+			} else {
+				leftserver = clientSocktwo;
+			}
+
 			// start
 			while (true) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
