@@ -100,8 +100,9 @@ class Server implements Runnable {
 				buf.clear();
 				int bytesRead = leftserver.read(buf);
 				if (bytesRead != -1) {
+					System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
 					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("\n")) {
-						System.out.println("leftread:"+s);
+//						System.out.println("leftread:"+s);
 						leftread.add(s);
 					}
 					buf.clear();
@@ -109,8 +110,9 @@ class Server implements Runnable {
 				buf.clear();
 				bytesRead = rightserver.read(buf);
 				if (bytesRead != -1) {
+					System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
 					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("n")) {
-						System.out.println("rightread:"+s);
+//						System.out.println("rightread:"+s);
 						rightread.add(s);
 					}
 					buf.clear();

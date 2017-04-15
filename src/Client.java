@@ -9,7 +9,7 @@ import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
 
 public class Client implements Runnable {
-	public ArrayDeque<String> leftwrite = new ArrayDeque<>();
+	 public ArrayDeque<String> leftwrite = new ArrayDeque<>();
 	public ArrayDeque<String> rightwrite = new ArrayDeque<>();
 	String leftaddress, rightaddress;
 	int port;
@@ -57,8 +57,10 @@ public class Client implements Runnable {
 
 				buf.flip();
 				left.write(buf);
-				System.out.println("leftwrite:"+s);
+//				System.out.println("leftwrite:"+s);
+				
 			}
+			leftwrite.clear();
 			for (String s : rightwrite) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
@@ -66,8 +68,9 @@ public class Client implements Runnable {
 
 				buf.flip();
 				right.write(buf);
-				System.out.println("rightwrite:"+s);
-			}}
+//				System.out.println("rightwrite:"+s);
+			}
+			rightwrite.clear();}
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
