@@ -1,6 +1,13 @@
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
@@ -10,61 +17,89 @@ class Server implements Runnable {
 	public ArrayDeque<String> rightread = new ArrayDeque<>();
 	public ArrayDeque<String> leftwrite = new ArrayDeque<>();
 	public ArrayDeque<String> rightwrite = new ArrayDeque<>();
-	String leftaddress,rightaddress;
+	String leftaddress, rightaddress;
 	int port;
-	
+
 	public Server(String leftaddress, String rightaddress, int port) {
-		this.leftaddress=leftaddress;
-		this.rightaddress=rightaddress;
-		this.port=port;
+		this.leftaddress = leftaddress;
+		this.rightaddress = rightaddress;
+		this.port = port;
 	}
 
 	@Override
 	public void run() {
 
-		SocketChannel left;
 		try {
-			left = SocketChannel.open();
-			left.bind(new InetSocketAddress(leftaddress, port));
-			left.configureBlocking(false);
-			SocketChannel right = SocketChannel.open();
-			right.bind(new InetSocketAddress(rightaddress, port));
-			right.configureBlocking(false);
-			while (!left.finishConnect() && !right.finishConnect()) {
-				ByteBuffer buf = ByteBuffer.allocate(512);
-				buf.clear();
-				int bytesRead = left.read(buf);
-				if (bytesRead != -1) {
-					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-						leftread.add(s);
-					}
-					buf.clear();
+
+			// clients setup
+			Socket leftSock = null;
+			DataOutputStream leftOutputStr = null;
+			BufferedReader leftInputStr = null;
+			Socket rightSock = null;
+			DataOutputStream rightOutputStr = null;
+			BufferedReader rightInputStr = null;
+			leftSock = new Socket(leftaddress, port);
+			leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
+			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
+			rightSock = new Socket(rightaddress, port);
+			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
+			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
+			// server setup
+			ServerSocket servSock = null;
+			try {
+				servSock = new ServerSocket(port);
+			} catch (IOException e) {
+				System.err.println(e);
+			}
+			Socket leftserver = null;
+			Socket rightserver = null;
+			try {
+				Socket clientSockone = servSock.accept();
+				if (clientSockone.getInetAddress().toString().equals(leftaddress)) {
+					leftserver = clientSockone;
+				} else {
+					rightserver = clientSockone;
 				}
-				buf.clear();
-				bytesRead = right.read(buf);
-				if (bytesRead != -1) {
-					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-						rightread.add(s);
-					}
-					buf.clear();
+
+				Socket clientSocktwo = servSock.accept();
+
+				if (clientSocktwo.getInetAddress().toString().equals(rightaddress)) {
+					rightserver = clientSocktwo;
+				} else {
+					leftserver = clientSocktwo;
+				}
+
+			} catch (IOException e) {
+				System.out.println(e);
+			}
+			BufferedReader leftinputStr;
+			DataOutputStream leftoutputStr;
+			String rightinputLine;
+			BufferedReader rightinputStr;
+			DataOutputStream rightoutputStr;
+			leftinputStr = new BufferedReader(new InputStreamReader(leftserver.getInputStream()));
+			leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
+			rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
+			rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
+			// start
+			while (true) {
+				String temp = leftinputStr.readLine();
+				while (temp != null) {
+					leftread.add(temp);
+				}
+				temp = rightInputStr.readLine();
+				while (temp != null) {
+					rightread.add(temp);
 				}
 				for (String s : leftwrite) {
-					buf.clear();
-					buf.put(s.getBytes());
-					buf.flip();
-					left.write(buf);
-					Thread.sleep(1000L);
+					leftOutputStr.writeBytes(s);
 				}
 				for (String s : rightwrite) {
-					buf.clear();
-					buf.put(s.getBytes());
-					buf.flip();
-					right.write(buf);
-					Thread.sleep(1000L);
+					rightOutputStr.writeBytes(s);
 				}
 
 			}
-		} catch (IOException | InterruptedException e) {
+		} catch (IOException  e) {
 			e.printStackTrace();
 		}
 

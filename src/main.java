@@ -46,27 +46,27 @@ public class main {
 						break;}
 					}else if(peek.equals("othertrue")){
 						if(drinkaskcount==5){
-							server.rightwrite.add(peek+",");
+							server.rightwrite.add(peek+"\n");
 						}else{
 							state=State.thristy;
 						}
 						server.leftread.pop();
 					}else if(peek.equals("otherfalse")){
 						if(drinkaskcount==5){
-							server.rightwrite.add(peek+",");
+							server.rightwrite.add(peek+"\n");
 						}else{
 							drinkaskcount--;
 						}
 						server.leftread.pop();
 					}else if(peek.equals("cup")){
-						server.leftwrite.add(cup+",");
-						server.rightwrite.add("othercup,");
+						server.leftwrite.add(cup+"\n");
+						server.rightwrite.add("othercup\n");
 						server.leftread.pop();
 					}else if(peek.equals("othercup")){
-						server.leftwrite.add("other"+cup+",");
+						server.leftwrite.add("other"+cup+"\n");
 						server.leftread.pop();
 					}else if(peek.equals("chop")){
-						server.leftwrite.add(leftChop+",");
+						server.leftwrite.add(leftChop+"\n");
 						server.leftread.pop();
 					}
 				}
@@ -77,38 +77,38 @@ public class main {
 						break;}
 					}else if(peek.equals("othertrue")){
 						if(drinkaskcount==5){
-							server.leftwrite.add(peek+",");
+							server.leftwrite.add(peek+"\n");
 						}else{
 							state=State.thristy;
 						}
 						server.rightread.pop();
 					}else if(peek.equals("otherfalse")){
 						if(drinkaskcount==5){
-							server.leftwrite.add(peek+",");
+							server.leftwrite.add(peek+"\n");
 						}else{
 							drinkaskcount--;
 						}
 						server.rightread.pop();
 					}else if(peek.equals("cup")){
-						server.rightwrite.add(cup+",");
-						server.leftwrite.add("othercup,");
+						server.rightwrite.add(cup+"\n");
+						server.leftwrite.add("othercup\n");
 						server.rightread.pop();
 					}else if(peek.equals("othercup")){
-						server.rightwrite.add("other"+cup+",");
+						server.rightwrite.add("other"+cup+"\n");
 						server.rightread.pop();
 					}else if(peek.equals("chop")){
-						server.rightwrite.add(rightChop+",");
+						server.rightwrite.add(rightChop+"\n");
 						server.rightread.pop();
 					}
 				}
 			}
 			if((rand==4||rand==6) && state==State.hungry){
 				if(rand==4){
-					server.leftwrite.add("Chop,");
+					server.leftwrite.add("Chop\n");
 					state=State.waitingLeftChop;
 				}
 				else if (rand==6){
-					server.rightwrite.add("Chop");
+					server.rightwrite.add("Chop\n");
 					state=State.waitingRightChop;
 				}
 			}else if(state==State.waitingRightChop){
@@ -157,7 +157,7 @@ public class main {
 				state=State.thristy;
 			}else if(rand==5&&state==State.thristy){
 				drinkaskcount--;
-				server.rightwrite.add("cup,");
+				server.rightwrite.add("cup\n");
 				state=State.waitingCup;
 			}else if(drinkaskcount==0&&state==State.waitingCup){
 				cup=true;
