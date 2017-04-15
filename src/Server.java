@@ -88,27 +88,7 @@ class Server implements Runnable {
 			leftoutputStr = new DataOutputStream(leftserver.getOutputStream());
 			rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
 			rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
-			// start
-			// System.out.println("read");
-			// while (true) {
-			// ByteBuffer buf = ByteBuffer.allocate(1024);
-			// buf.clear();
-			// leftserver.read(buf);
-			// for (String s :
-			// StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-			// leftread.add(s);
-			// }
-			// buf.clear();
-			//
-			// rightserver.read(buf);
-			//
-			// for (String s :
-			// StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-			// rightread.add(s);
-			// }
-			// buf.clear();
-			//
-			// }
+
 
 			Thread t1 = new Thread(new Runnable() {
 

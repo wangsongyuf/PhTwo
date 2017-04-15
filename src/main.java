@@ -46,11 +46,14 @@ public class main {
 		Random r = new Random();
 		int rand = r.nextInt(10);
 		while (true) {
-			Thread.sleep(1000L);
+			Thread.sleep(3000L);
 			System.out.println(rand + "," + state);
 			if (state != State.sleeping) {
 				while (!server.leftread.isEmpty()) {
 					String peek = server.leftread.peek();
+					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+					System.out.println("peek is"+peek);
+					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 					if (peek.equals("true") || peek.equals("false")) {
 						if (state == State.waitingCup || state == State.waitingLeftChop
 								|| state == State.waitingRightChop) {

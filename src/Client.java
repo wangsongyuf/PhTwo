@@ -24,17 +24,7 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			Thread.sleep(10000L);
-//			System.out.println("try to connect server");
-//			SocketChannel left = SocketChannel.open();
-//			left.configureBlocking(true);
-//			left.connect(new InetSocketAddress(leftaddress, port));
-//			left.configureBlocking(false);
-//			SocketChannel right = SocketChannel.open();
-//			right.configureBlocking(true);
-//			right.connect(new InetSocketAddress(rightaddress, port));
-//			right.configureBlocking(false);
-//			
-			
+
 			Socket leftSock = null;
 	DataOutputStream leftOutputStr = null;
 			BufferedReader leftInputStr = null;
@@ -63,11 +53,7 @@ public class Client implements Runnable {
 			for (String s : leftwrite) {
 				count++;
 				
-//				ByteBuffer buf = ByteBuffer.allocate(1024);
-//				buf.clear();
-//				buf.put(s.getBytes());
-//
-//				buf.flip();
+
 				leftOutputStr.writeBytes(s);
 				
 			}
@@ -78,11 +64,7 @@ public class Client implements Runnable {
 			 count=0;
 			for (String s : rightwrite) {
 				count++;
-//				ByteBuffer buf = ByteBuffer.allocate(1024);
-//				buf.clear();
-//				buf.put(s.getBytes());
-//
-//				buf.flip();
+
 				rightOutputStr.writeBytes(s);
 			}
 			while(count!=0){
