@@ -56,7 +56,7 @@ public class Client implements Runnable {
 				buf.put(s.getBytes());
 
 				buf.flip();
-				System.out.println(left.write(buf));
+				left.write(buf);
 //				System.out.println("leftwrite:"+s);
 				
 			}
@@ -67,7 +67,7 @@ public class Client implements Runnable {
 				buf.put(s.getBytes());
 
 				buf.flip();
-				System.out.println(right.write(buf));
+				right.write(buf);
 //				System.out.println("rightwrite:"+s);
 			}
 			rightwrite.clear();}

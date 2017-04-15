@@ -98,25 +98,23 @@ class Server implements Runnable {
 			while (true) {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
-				int bytesRead = leftserver.read(buf);
-				if (bytesRead != -1) {
-					System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
-					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("\n")) {
-//						System.out.println("leftread:"+s);
-						leftread.add(s);
-					}
-					buf.clear();
+				leftserver.read(buf);
+				System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
+				for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("\n")) {
+					// System.out.println("leftread:"+s);
+					leftread.add(s);
 				}
 				buf.clear();
-				bytesRead = rightserver.read(buf);
-				if (bytesRead != -1) {
-					System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
-					for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("n")) {
-//						System.out.println("rightread:"+s);
-						rightread.add(s);
-					}
-					buf.clear();
+
+				rightserver.read(buf);
+
+				System.out.println(StandardCharsets.UTF_8.decode(buf).toString());
+				for (String s : StandardCharsets.UTF_8.decode(buf).toString().split("n")) {
+					// System.out.println("rightread:"+s);
+					rightread.add(s);
 				}
+				buf.clear();
+
 			}
 
 		} catch (IOException e) {
