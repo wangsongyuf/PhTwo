@@ -24,19 +24,6 @@ public class Client implements Runnable {
 	public void run() {
 		try {
 			Thread.sleep(10000L);
-			// clients setup
-//			Socket leftSock = null;
-//			DataOutputStream leftOutputStr = null;
-//			BufferedReader leftInputStr = null;
-//			Socket rightSock = null;
-//			DataOutputStream rightOutputStr = null;
-//			BufferedReader rightInputStr = null;
-//			leftSock = new Socket(leftaddress, port);
-//			leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
-//			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
-//			rightSock = new Socket(rightaddress, port);
-//			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
-//			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
 			System.out.println("try to connect server");
 			SocketChannel left = SocketChannel.open();
 			left.configureBlocking(true);

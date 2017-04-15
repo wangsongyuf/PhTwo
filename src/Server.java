@@ -31,44 +31,11 @@ class Server implements Runnable {
 
 		try {
 
-			// Socket leftserver = null;
-			// Socket rightserver = null;
-			// ServerSocket servSock = null;
-			// servSock = new ServerSocket(port);
-			// Socket clientSockone = servSock.accept();
-			// if
-			// (clientSockone.getInetAddress().toString().equals(leftaddress)) {
-			// leftserver = clientSockone;
-			// } else {
-			// rightserver = clientSockone;
-			// }
-			//
-			// Socket clientSocktwo = servSock.accept();
-			//
-			// if
-			// (clientSocktwo.getInetAddress().toString().equals(rightaddress))
-			// {
-			// rightserver = clientSocktwo;
-			// } else {
-			// leftserver = clientSocktwo;
-			// }
-			// BufferedReader leftinputStr;
-			// DataOutputStream leftoutputStr;
-			// String rightinputLine;
-			// BufferedReader rightinputStr;
-			// DataOutputStream rightoutputStr;
-			// leftinputStr = new BufferedReader(new
-			// InputStreamReader(leftserver.getInputStream()));
-			// leftoutputStr = new
-			// DataOutputStream(leftserver.getOutputStream());
-			// rightinputStr = new BufferedReader(new
-			// InputStreamReader(rightserver.getInputStream()));
-			// rightoutputStr = new
-			// DataOutputStream(rightserver.getOutputStream());
+			
 
 			ServerSocketChannel server = ServerSocketChannel.open();
 			server.socket().bind(new InetSocketAddress(port));
-			server.configureBlocking(false);
+			server.configureBlocking(true);
 
 			SocketChannel leftserver = null;
 			SocketChannel rightserver = null;
@@ -99,18 +66,14 @@ class Server implements Runnable {
 				ByteBuffer buf = ByteBuffer.allocate(1024);
 				buf.clear();
 				leftserver.read(buf);
-				System.out.println("LeftToRead: "+StandardCharsets.UTF_8.decode(buf).toString());
 				for (String s : StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-					 System.out.println("leftread:"+s);
 					leftread.add(s);
 				}
 				buf.clear();
 
 				rightserver.read(buf);
 
-				System.out.println("RIghtToRead: "+StandardCharsets.UTF_8.decode(buf).toString());
 				for (String s : StandardCharsets.UTF_8.decode(buf).toString().split(",")) {
-					 System.out.println("rightread:"+s);
 					rightread.add(s);
 				}
 				buf.clear();
