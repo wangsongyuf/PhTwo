@@ -46,7 +46,7 @@ public class main {
 		Random r = new Random();
 		int rand=r.nextInt(10);
 		while (true) {
-//			System.out.println(rand+","+state);
+			System.out.println(rand+","+state);
 			if(state!=State.sleeping){
 				while(!server.leftread.isEmpty()){
 					String peek=server.leftread.peek();
