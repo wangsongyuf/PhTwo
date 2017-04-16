@@ -185,7 +185,8 @@ public class main {
 				state = State.waitingCup;
 			} else if (drinkaskcount == 0 && state == State.waitingCup) {
 				cup = true;
-				drinkaskcount--;
+				state=State.drinking;
+				drinkaskcount=5;
 			} else if (state == State.drinking && drinktimecount > 0) {
 				drinktimecount--;
 			} else if (state == State.drinking && drinktimecount <= 0) {
