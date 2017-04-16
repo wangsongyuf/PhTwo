@@ -147,6 +147,7 @@ public class main {
 					} else {
 						rand = 4;
 						state=State.waitingLeftChop;
+						client.leftwrite.add("chop\n");
 						continue;
 					}
 				}
@@ -166,6 +167,7 @@ public class main {
 					} else {
 						rand = 6;
 						state=State.waitingRightChop;
+						client.rightwrite.add("chop\n");
 						continue;
 					}
 				}
