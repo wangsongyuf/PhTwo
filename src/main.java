@@ -8,19 +8,23 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Queue;
 import java.util.Random;
+import java.util.Scanner;
+import java.util.spi.CurrencyNameProvider;
 
 public class main {
 	public enum State {
 		thinking, hungry, eating, thristy, drinking, sleeping, waitingLeftChop, waitingRightChop, waitingCup
 	}
+	static boolean leftChop = false;
+	static boolean rightChop = false;
+	static boolean cup = false;
+	static State state = State.thinking;
 
 	public static void main(String[] args) throws InterruptedException {
 		String leftaddress;
 		String rightaddress;
-		State state = State.thinking;
-		boolean leftChop = false;
-		boolean rightChop = false;
-		boolean cup = false;
+		
+		
 		int port;
 		int drinkaskcount = 5;
 		int drinktimecount = 40;
@@ -38,6 +42,43 @@ public class main {
 		Thread t2 = new Thread(client);
 		t1.start();
 		t2.start();
+		
+		Thread t3=new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				Scanner sc = new Scanner(System.in);
+				boolean xxx = true;
+				while (xxx) {
+					String input = sc.next();
+					leftChop = false;
+					rightChop = false;
+					cup=false;
+					if (input.equals("thinking")) {
+						state =State.thinking;
+
+					} else if (input.equals("hungry")) {
+						state = State.hungry;
+					}
+					
+					else if (input.equals("thristy")) {
+						state = State.thristy;
+					}
+					else if (input.equals("sleeping")) {
+						state = State.sleeping;
+					}
+					
+					else if (input.equals("gui")) {
+						gui.run();
+					}
+					//TODO: add states
+
+				}
+				sc.close();
+				
+			}
+		});
+		t3.start();
 	
 		Thread.sleep(10000L);
 		Random r = new Random();
