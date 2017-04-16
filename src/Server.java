@@ -12,10 +12,13 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
+import java.util.concurrent.ArrayBlockingQueue;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 class Server implements Runnable {
-	public ArrayDeque<String> leftread = new ArrayDeque<>();
-	public ArrayDeque<String> rightread = new ArrayDeque<>();
+	public LinkedBlockingQueue<String> leftread = new LinkedBlockingQueue<String>();
+	public LinkedBlockingQueue<String> rightread = new LinkedBlockingQueue<String>();
 
 	String leftaddress, rightaddress;
 	int port;
@@ -72,9 +75,12 @@ class Server implements Runnable {
 //							System.out.println("*****************************************************");
 //							System.out.println("ReadLeftInput:"+temp);
 //							System.out.println("*****************************************************");
-								leftread.add(temp);
+								leftread.put(temp);
 							
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
@@ -93,9 +99,12 @@ class Server implements Runnable {
 //							System.out.println("*****************************************************");
 //							System.out.println("ReadRightInput:"+temp);
 //							System.out.println("*****************************************************");
-								rightread.add(temp);
+								rightread.put(temp);
 					
 						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}

@@ -7,10 +7,11 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Client implements Runnable {
-	public ArrayDeque<String> leftwrite = new ArrayDeque<>();
-	public ArrayDeque<String> rightwrite = new ArrayDeque<>();
+	public LinkedBlockingQueue<String> leftwrite = new LinkedBlockingQueue<>();
+	public LinkedBlockingQueue<String> rightwrite = new LinkedBlockingQueue<>();
 	String leftaddress, rightaddress;
 	int port;
 
@@ -58,7 +59,7 @@ public class Client implements Runnable {
 				
 			}
 			while(count!=0){
-				leftwrite.pop();
+				leftwrite.take();
 				count--;
 			}
 			 count=0;
@@ -68,7 +69,7 @@ public class Client implements Runnable {
 				rightOutputStr.writeBytes(s);
 			}
 			while(count!=0){
-				rightwrite.pop();
+				rightwrite.take();
 				count--;
 			}}
 		} catch (InterruptedException e) {
