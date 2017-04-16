@@ -51,9 +51,9 @@ public class main {
 			if (state != State.sleeping) {
 				while (!server.leftread.isEmpty()) {
 					String peek = server.leftread.peek();
-					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-					System.out.println("peek is: "+peek);
-					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+//					System.out.println("peek is: "+peek);
+//					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 					if (peek.equals("true") || peek.equals("false")) {
 						if (state == State.waitingCup || state == State.waitingLeftChop
 								) {
@@ -146,6 +146,7 @@ public class main {
 						state = State.eating;
 					} else {
 						rand = 4;
+						state=State.waitingLeftChop;
 						continue;
 					}
 				}
@@ -164,6 +165,7 @@ public class main {
 						state = State.eating;
 					} else {
 						rand = 6;
+						state=State.waitingRightChop;
 						continue;
 					}
 				}

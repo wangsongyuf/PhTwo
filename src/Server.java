@@ -69,9 +69,9 @@ class Server implements Runnable {
 						String temp;
 						try {
 							temp = leftinputStr.readLine();
-							System.out.println("*****************************************************");
-							System.out.println("ReadLeftInput:"+temp);
-							System.out.println("*****************************************************");
+//							System.out.println("*****************************************************");
+//							System.out.println("ReadLeftInput:"+temp);
+//							System.out.println("*****************************************************");
 								leftread.add(temp);
 							
 						} catch (IOException e) {
@@ -90,9 +90,9 @@ class Server implements Runnable {
 						String temp;
 						try {
 							temp = rightinputStr.readLine();
-							System.out.println("*****************************************************");
-							System.out.println("ReadRightInput:"+temp);
-							System.out.println("*****************************************************");
+//							System.out.println("*****************************************************");
+//							System.out.println("ReadRightInput:"+temp);
+//							System.out.println("*****************************************************");
 								rightread.add(temp);
 					
 						} catch (IOException e) {
