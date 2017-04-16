@@ -52,11 +52,11 @@ public class main {
 				while (!server.leftread.isEmpty()) {
 					String peek = server.leftread.peek();
 					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-					System.out.println("peek is"+peek);
+					System.out.println("peek is: "+peek);
 					System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 					if (peek.equals("true") || peek.equals("false")) {
 						if (state == State.waitingCup || state == State.waitingLeftChop
-								|| state == State.waitingRightChop) {
+								) {
 							break;
 						}
 					} else if (peek.equals("othertrue")) {
@@ -90,7 +90,7 @@ public class main {
 				while (!server.rightread.isEmpty()) {
 					String peek = server.rightread.peek();
 					if (peek.equals("true") || peek.equals("false")) {
-						if (state == State.waitingCup || state == State.waitingLeftChop
+						if (state == State.waitingCup 
 								|| state == State.waitingRightChop) {
 							break;
 						}

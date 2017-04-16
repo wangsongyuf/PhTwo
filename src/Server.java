@@ -31,36 +31,7 @@ class Server implements Runnable {
 
 		try {
 
-			// ServerSocketChannel server = ServerSocketChannel.open();
-			// server.socket().bind(new InetSocketAddress(port));
-			// server.configureBlocking(true);
-			//
-			// SocketChannel leftserver = null;
-			// SocketChannel rightserver = null;
-			// System.out.println("try to get leftright");
-			// SocketChannel clientSockone = server.accept();
-			// while (clientSockone == null) {
-			// clientSockone = server.accept();
-			// }
-			// if
-			// (clientSockone.getRemoteAddress().toString().contains(leftaddress))
-			// {
-			// leftserver = clientSockone;
-			// } else {
-			// rightserver = clientSockone;
-			// }
-			//
-			// SocketChannel clientSocktwo = server.accept();
-			// while (clientSocktwo == null) {
-			// clientSocktwo = server.accept();
-			// }
-			// if
-			// (clientSocktwo.getRemoteAddress().toString().contains(rightaddress))
-			// {
-			// rightserver = clientSocktwo;
-			// } else {
-			// leftserver = clientSocktwo;
-			// }
+		
 			Socket leftserver = null;
 			Socket rightserver = null;
 			ServerSocket servSock = null;
