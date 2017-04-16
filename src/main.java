@@ -23,6 +23,7 @@ public class main {
 	static int drinktimecount = 40;
 	static int sleepcount = 40;
 	static int hungrycount=40;
+	static int wait=20;
 
 	public static void main(String[] args)  {
 		try{
@@ -60,6 +61,7 @@ public class main {
 					  drinktimecount = 40;
 					  sleepcount = 40;
 					  hungrycount=40;
+					  wait=20;
 					if (input.equals("thinking")) {
 						state =State.thinking;
 
@@ -277,6 +279,23 @@ public class main {
 				hungrycount=40;
 			}
 			rand = r.nextInt(10);
+		}
+		
+		if(state==State.waitingCup||state==State.waitingLeftChop||state==State.waitingRightChop){
+			wait--;
+		}else{
+			wait=20;
+		}
+		if(wait<=0){
+			leftChop = false;
+			rightChop = false;
+			cup=false;
+			  drinkaskcount = 5;
+			  drinktimecount = 40;
+			  sleepcount = 40;
+			  hungrycount=40;
+			  wait=20;
+			  state=State.thinking;
 		}
 		System.out.println("RIP");
 

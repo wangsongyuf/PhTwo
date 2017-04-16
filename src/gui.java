@@ -54,6 +54,7 @@ public class gui {
 				  main.drinktimecount = 40;
 				  main.sleepcount = 40;
 				  main.hungrycount=40;
+				  main.wait=20;
 			}
 		});
 		frame.getContentPane().add(btnNewButton, BorderLayout.WEST);
@@ -69,6 +70,7 @@ public class gui {
 				  main.drinktimecount = 40;
 				  main.sleepcount = 40;
 				  main.hungrycount=40;
+				  main.wait=20;
 			}
 		});
 		frame.getContentPane().add(btnNewButton_1, BorderLayout.EAST);
@@ -84,6 +86,7 @@ public class gui {
 				  main.drinktimecount = 40;
 				  main.sleepcount = 40;
 				  main.hungrycount=40;
+				  main.wait=20;
 			}
 		});
 		frame.getContentPane().add(btnThi, BorderLayout.NORTH);
@@ -99,6 +102,7 @@ public class gui {
 				  main.drinktimecount = 40;
 				  main.sleepcount = 40;
 				  main.hungrycount=40;
+				  main.wait=20;
 			}
 		});
 		frame.getContentPane().add(btnSleeping, BorderLayout.SOUTH);
