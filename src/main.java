@@ -74,14 +74,14 @@ public class main {
 						}
 						server.leftread.pop();
 					} else if (peek.equals("cup")) {
-						client.leftwrite.add(cup + "\n");
+						client.leftwrite.add(String.valueOf(cup) + "\n");
 						client.rightwrite.add("othercup\n");
 						server.leftread.pop();
 					} else if (peek.equals("othercup")) {
-						client.leftwrite.add("other" + cup + "\n");
+						client.leftwrite.add("other" + String.valueOf(cup) + "\n");
 						server.leftread.pop();
 					} else if (peek.equals("chop")) {
-						client.leftwrite.add(leftChop + "\n");
+						client.leftwrite.add(String.valueOf(leftChop) + "\n");
 						server.leftread.pop();
 					} else {
 						server.leftread.pop();
@@ -109,14 +109,14 @@ public class main {
 						}
 						server.rightread.pop();
 					} else if (peek.equals("cup")) {
-						client.rightwrite.add(cup + "\n");
+						client.rightwrite.add(String.valueOf(cup) + "\n");
 						client.leftwrite.add("othercup\n");
 						server.rightread.pop();
 					} else if (peek.equals("othercup")) {
-						client.rightwrite.add("other" + cup + "\n");
+						client.rightwrite.add("other" + String.valueOf(cup)+ "\n");
 						server.rightread.pop();
 					} else if (peek.equals("chop")) {
-						client.rightwrite.add(rightChop + "\n");
+						client.rightwrite.add(String.valueOf(rightChop) + "\n");
 						server.rightread.pop();
 					} else {
 						server.rightread.pop();
