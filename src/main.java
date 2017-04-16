@@ -86,7 +86,7 @@ public class main {
 		while (hungrycount>0) {
 			System.out.println("drink count:"+drinkaskcount);
 			Thread.sleep(1000L);
-			System.out.println(rand + "," + state);
+			System.out.println("State: "+state);
 			if (state != State.sleeping) {
 				while (!server.leftread.isEmpty()) {
 					String peek = server.leftread.peek();
@@ -114,10 +114,7 @@ public class main {
 						}
 						server.removeleft();
 					} else if (peek.equals("cup")) {
-						if(state==State.waitingCup){
-							state=State.thristy;
-							drinkaskcount=5;
-						}
+						
 						client.addleft(String.valueOf(cup) + "\n");
 						client.addright("othercup\n");
 						server.removeleft();
@@ -126,10 +123,7 @@ public class main {
 						if(drinkaskcount==5){
 							client.addright("othercup\n");
 						}
-						if(state==State.waitingCup){
-							state=State.thristy;
-							drinkaskcount=5;
-						}
+						
 						server.removeleft();
 					} else if (peek.equals("chop")) {
 						client.leftwrite.add(String.valueOf(leftChop) + "\n");
