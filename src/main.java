@@ -179,6 +179,7 @@ public class main {
 					}
 				}
 			}
+			System.out.println("wait: "+wait);
 			if ((rand == 4 || rand == 6) && state == State.hungry) {
 				if (rand == 4) {
 					client.addleft("chop\n");
