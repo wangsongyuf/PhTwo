@@ -25,6 +25,23 @@ class Server implements Runnable {
 		this.rightaddress = rightaddress;
 		this.port = port;
 	}
+	
+	public synchronized  void  addleft(String s){
+		leftread.add(s);
+		
+	}
+	public synchronized  void  addright(String s){
+		rightread.add(s);
+		
+	}
+	
+	public synchronized String removeleft() {
+		return leftread.pop();
+	}
+
+	public synchronized String removeright() {
+		return rightread.pop();
+	}
 
 	@Override
 	public void run() {
@@ -72,7 +89,7 @@ class Server implements Runnable {
 //							System.out.println("*****************************************************");
 //							System.out.println("ReadLeftInput:"+temp);
 //							System.out.println("*****************************************************");
-								leftread.add(temp);
+								addleft(temp);
 							
 						} catch (IOException e) {
 							// TODO Auto-generated catch block
@@ -93,7 +110,7 @@ class Server implements Runnable {
 //							System.out.println("*****************************************************");
 //							System.out.println("ReadRightInput:"+temp);
 //							System.out.println("*****************************************************");
-								rightread.add(temp);
+								addright(temp);
 					
 						} catch (IOException e) {
 							// TODO Auto-generated catch block

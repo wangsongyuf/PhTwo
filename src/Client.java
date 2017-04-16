@@ -50,25 +50,15 @@ public class Client implements Runnable {
 //				System.out.println("---------------------------------------------------");
 //				}
 			int count=0;
-			for (String s : leftwrite) {
-				count++;
-				
-
-				leftOutputStr.writeBytes(s);
-				
-			}
+			count = loopleft(leftOutputStr, count);
 			while(count!=0){
-				leftwrite.pop();
+				removeleft();
 				count--;
 			}
 			 count=0;
-			for (String s : rightwrite) {
-				count++;
-
-				rightOutputStr.writeBytes(s);
-			}
+			count = loopright(rightOutputStr, count);
 			while(count!=0){
-				rightwrite.pop();
+				removeright();
 				count--;
 			}}
 		} catch (InterruptedException e) {
@@ -79,6 +69,43 @@ public class Client implements Runnable {
 			e.printStackTrace();
 		}
 
+	}
+
+	private synchronized int loopright(DataOutputStream rightOutputStr, int count) throws IOException {
+		for (String s : rightwrite) {
+			count++;
+
+			rightOutputStr.writeBytes(s);
+		}
+		return count;
+	}
+
+	private synchronized int loopleft(DataOutputStream leftOutputStr, int count) throws IOException {
+		for (String s : leftwrite) {
+			count++;
+			
+
+			leftOutputStr.writeBytes(s);
+			
+		}
+		return count;
+	}
+
+	public synchronized String removeleft() {
+		return leftwrite.pop();
+	}
+
+	public synchronized String removeright() {
+		return rightwrite.pop();
+	}
+	
+	public synchronized  void  addleft(String s){
+		leftwrite.add(s);
+		
+	}
+	public synchronized  void  addright(String s){
+		rightwrite.add(s);
+		
 	}
 
 }
