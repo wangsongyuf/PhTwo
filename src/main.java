@@ -180,6 +180,17 @@ public class main {
 				}
 			}
 			System.out.println("wait: "+wait);
+			if(wait<=0){
+				leftChop = false;
+				rightChop = false;
+				cup=false;
+				  drinkaskcount = 5;
+				  drinktimecount = 40;
+				  sleepcount = 40;
+				  hungrycount=40;
+				  wait=20;
+				  state=State.thinking;
+			}
 			if ((rand == 4 || rand == 6) && state == State.hungry) {
 				if (rand == 4) {
 					client.addleft("chop\n");
@@ -287,17 +298,7 @@ public class main {
 			}else{
 				wait=20;
 			}
-			if(wait<=0){
-				leftChop = false;
-				rightChop = false;
-				cup=false;
-				  drinkaskcount = 5;
-				  drinktimecount = 40;
-				  sleepcount = 40;
-				  hungrycount=40;
-				  wait=20;
-				  state=State.thinking;
-			}
+			
 			rand = r.nextInt(10);
 		}
 		
