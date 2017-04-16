@@ -278,25 +278,26 @@ public class main {
 			else if(state==State.eating){
 				hungrycount=40;
 			}
+			if(state==State.waitingCup||state==State.waitingLeftChop||state==State.waitingRightChop){
+				wait--;
+			}else{
+				wait=20;
+			}
+			if(wait<=0){
+				leftChop = false;
+				rightChop = false;
+				cup=false;
+				  drinkaskcount = 5;
+				  drinktimecount = 40;
+				  sleepcount = 40;
+				  hungrycount=40;
+				  wait=20;
+				  state=State.thinking;
+			}
 			rand = r.nextInt(10);
 		}
 		
-		if(state==State.waitingCup||state==State.waitingLeftChop||state==State.waitingRightChop){
-			wait--;
-		}else{
-			wait=20;
-		}
-		if(wait<=0){
-			leftChop = false;
-			rightChop = false;
-			cup=false;
-			  drinkaskcount = 5;
-			  drinktimecount = 40;
-			  sleepcount = 40;
-			  hungrycount=40;
-			  wait=20;
-			  state=State.thinking;
-		}
+		
 		System.out.println("RIP");
 
 	}catch(Exception e){
