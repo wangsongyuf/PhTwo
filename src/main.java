@@ -37,15 +37,14 @@ public class main {
 		Client client = new Client(leftaddress, rightaddress, port);
 		Thread t1 = new Thread(server);
 		Thread t2 = new Thread(client);
-		System.out.println("before server start");
 		t1.start();
-		System.out.println("before client start");
 		t2.start();
-		System.out.println("generate number");
+	
 		Thread.sleep(10000L);
 		Random r = new Random();
 		int rand = r.nextInt(10);
 		while (true) {
+			System.out.println("drink count:"+drinkaskcount);
 			Thread.sleep(3000L);
 			System.out.println(rand + "," + state);
 			if (state != State.sleeping) {
@@ -79,6 +78,9 @@ public class main {
 						server.leftread.pop();
 					} else if (peek.equals("othercup")) {
 						client.leftwrite.add("other" + String.valueOf(cup) + "\n");
+						if(drinkaskcount==5){
+							client.rightwrite.add("othercup\n");
+						}
 						server.leftread.pop();
 					} else if (peek.equals("chop")) {
 						client.leftwrite.add(String.valueOf(leftChop) + "\n");
@@ -114,6 +116,9 @@ public class main {
 						server.rightread.pop();
 					} else if (peek.equals("othercup")) {
 						client.rightwrite.add("other" + String.valueOf(cup)+ "\n");
+						if(drinkaskcount==5){
+							client.leftwrite.add("othercup\n");
+						}
 						server.rightread.pop();
 					} else if (peek.equals("chop")) {
 						client.rightwrite.add(String.valueOf(rightChop) + "\n");
