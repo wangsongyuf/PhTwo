@@ -190,6 +190,7 @@ public class main {
 				}
 			} else if (state == State.waitingRightChop) {
 				if (server.rightread.isEmpty()) {
+					wait--;
 					continue;
 				}
 				String s = server.removeright();
@@ -210,6 +211,7 @@ public class main {
 				}
 			} else if (state == State.waitingLeftChop) {
 				if (server.leftread.isEmpty()) {
+					wait--;
 					continue;
 				}
 				String s = server.removeleft();
@@ -264,6 +266,7 @@ public class main {
 				state = State.thinking;
 			} else if (state == State.waitingCup) {
 				if (server.rightread.isEmpty()) {
+					wait--;
 					continue;
 				}
 				String s = server.removeright();
