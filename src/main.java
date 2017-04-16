@@ -179,7 +179,7 @@ public class main {
 					}
 				}
 			}
-			System.out.println("wait: "+wait);
+//			System.out.println("wait: "+wait);
 			if(wait<=0){
 				leftChop = false;
 				rightChop = false;
