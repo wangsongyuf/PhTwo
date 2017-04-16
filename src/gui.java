@@ -50,6 +50,10 @@ public class gui {
 				main.leftChop=false;
 				main.rightChop=false;
 				main.cup=false;
+				 main.drinkaskcount = 5;
+				  main.drinktimecount = 40;
+				  main.sleepcount = 40;
+				  main.hungrycount=40;
 			}
 		});
 		frame.getContentPane().add(btnNewButton, BorderLayout.WEST);
@@ -61,6 +65,10 @@ public class gui {
 				main.leftChop=false;
 				main.rightChop=false;
 				main.cup=false;
+				 main.drinkaskcount = 5;
+				  main.drinktimecount = 40;
+				  main.sleepcount = 40;
+				  main.hungrycount=40;
 			}
 		});
 		frame.getContentPane().add(btnNewButton_1, BorderLayout.EAST);
@@ -72,6 +80,10 @@ public class gui {
 				main.leftChop=false;
 				main.rightChop=false;
 				main.cup=false;
+				 main.drinkaskcount = 5;
+				  main.drinktimecount = 40;
+				  main.sleepcount = 40;
+				  main.hungrycount=40;
 			}
 		});
 		frame.getContentPane().add(btnThi, BorderLayout.NORTH);
@@ -83,6 +95,10 @@ public class gui {
 				main.leftChop=false;
 				main.rightChop=false;
 				main.cup=false;
+				 main.drinkaskcount = 5;
+				  main.drinktimecount = 40;
+				  main.sleepcount = 40;
+				  main.hungrycount=40;
 			}
 		});
 		frame.getContentPane().add(btnSleeping, BorderLayout.SOUTH);

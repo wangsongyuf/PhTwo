@@ -19,17 +19,19 @@ public class main {
 	static boolean rightChop = false;
 	static boolean cup = false;
 	static State state = State.thinking;
+	static int drinkaskcount = 5;
+	static int drinktimecount = 40;
+	static int sleepcount = 40;
+	static int hungrycount=40;
 
-	public static void main(String[] args) throws InterruptedException {
+	public static void main(String[] args)  {
+		try{
 		String leftaddress;
 		String rightaddress;
 		
 		
 		int port;
-		int drinkaskcount = 5;
-		int drinktimecount = 40;
-		int sleepcount = 40;
-		int hungrycount=40;
+		
 		if (args.length != 3) {
 			System.out.println("bad inadd");
 		}
@@ -54,6 +56,10 @@ public class main {
 					leftChop = false;
 					rightChop = false;
 					cup=false;
+					  drinkaskcount = 5;
+					  drinktimecount = 40;
+					  sleepcount = 40;
+					  hungrycount=40;
 					if (input.equals("thinking")) {
 						state =State.thinking;
 
@@ -275,6 +281,9 @@ public class main {
 		}
 		System.out.println("RIP");
 
+	}catch(Exception e){
+		e.printStackTrace();
 	}
 
+}
 }

@@ -124,7 +124,7 @@ class Server implements Runnable {
 			t2.start();
 
 		} catch (IOException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 
 	}
