@@ -26,6 +26,7 @@ public class main {
 		int drinkaskcount = 5;
 		int drinktimecount = 40;
 		int sleepcount = 40;
+		int hungrycount=40;
 		if (args.length != 3) {
 			System.out.println("bad input");
 		}
@@ -42,7 +43,7 @@ public class main {
 		Thread.sleep(10000L);
 		Random r = new Random();
 		int rand = r.nextInt(10);
-		while (true) {
+		while (hungrycount>0) {
 			System.out.println("drink count:"+drinkaskcount);
 			Thread.sleep(1000L);
 			System.out.println(rand + "," + state);
@@ -73,6 +74,10 @@ public class main {
 						}
 						server.leftread.take();
 					} else if (peek.equals("cup")) {
+						if(state==State.waitingCup){
+							state=State.thristy;
+							drinkaskcount=5;
+						}
 						client.leftwrite.put(String.valueOf(cup) + "\n");
 						client.rightwrite.put("othercup\n");
 						server.leftread.take();
@@ -80,6 +85,10 @@ public class main {
 						client.leftwrite.put("other" + String.valueOf(cup) + "\n");
 						if(drinkaskcount==5){
 							client.rightwrite.put("othercup\n");
+						}
+						if(state==State.waitingCup){
+							state=State.thristy;
+							drinkaskcount=5;
 						}
 						server.leftread.take();
 					} else if (peek.equals("chop")) {
@@ -221,9 +230,15 @@ public class main {
 				} else {
 					drinkaskcount--;
 				}
+			}else if(state==State.hungry){
+				hungrycount--;
+			}
+			else if(state==State.eating){
+				hungrycount=40;
 			}
 			rand = r.nextInt(10);
 		}
+		System.out.println("RIP");
 
 	}
 
