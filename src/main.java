@@ -90,7 +90,6 @@ public class main {
 		Random r = new Random();
 		int rand = r.nextInt(10);
 		while (hungrycount>0) {
-			System.out.println("drink count:"+drinkaskcount);
 			Thread.sleep(1000L);
 			System.out.println("State: "+state);
 			if (state != State.sleeping) {

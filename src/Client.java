@@ -37,7 +37,7 @@ public class Client implements Runnable {
 			rightSock = new Socket(rightaddress, port);
 			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
 			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
-			System.out.println("start write");
+
 			while(true){
 //				if(leftwrite.size()>0||rightwrite.size()>0){
 //				System.out.println("---------------------------------------------------");
