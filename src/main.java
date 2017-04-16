@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.io.StringBufferInputStream;
 import java.lang.ref.PhantomReference;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
@@ -16,8 +15,8 @@ public class main {
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-		String leftputress;
-		String rightputress;
+		String leftaddress;
+		String rightaddress;
 		State state = State.thinking;
 		boolean leftChop = false;
 		boolean rightChop = false;
@@ -28,13 +27,13 @@ public class main {
 		int sleepcount = 40;
 		int hungrycount=40;
 		if (args.length != 3) {
-			System.out.println("bad input");
+			System.out.println("bad inadd");
 		}
-		leftputress = args[0];
-		rightputress = args[1];
+		leftaddress = args[0];
+		rightaddress = args[1];
 		port = Integer.parseInt(args[2]);
-		Server server = new Server(leftputress, rightputress, port);
-		Client client = new Client(leftputress, rightputress, port);
+		Server server = new Server(leftaddress, rightaddress, port);
+		Client client = new Client(leftaddress, rightaddress, port);
 		Thread t1 = new Thread(server);
 		Thread t2 = new Thread(client);
 		t1.start();
@@ -60,42 +59,42 @@ public class main {
 						}
 					} else if (peek.equals("othertrue")) {
 						if (drinkaskcount == 5) {
-							client.rightwrite.put(peek + "\n");
+							client.rightwrite.add(peek + "\n");
 						} else {
 							state = State.thristy;
 							drinkaskcount=5;
 						}
-						server.leftread.take();
+						server.leftread.pop();
 					} else if (peek.equals("otherfalse")) {
 						if (drinkaskcount == 5) {
-							client.rightwrite.put(peek + "\n");
+							client.rightwrite.add(peek + "\n");
 						} else {
 							drinkaskcount--;
 						}
-						server.leftread.take();
+						server.leftread.pop();
 					} else if (peek.equals("cup")) {
 						if(state==State.waitingCup){
 							state=State.thristy;
 							drinkaskcount=5;
 						}
-						client.leftwrite.put(String.valueOf(cup) + "\n");
-						client.rightwrite.put("othercup\n");
-						server.leftread.take();
+						client.leftwrite.add(String.valueOf(cup) + "\n");
+						client.rightwrite.add("othercup\n");
+						server.leftread.pop();
 					} else if (peek.equals("othercup")) {
-						client.leftwrite.put("other" + String.valueOf(cup) + "\n");
+						client.leftwrite.add("other" + String.valueOf(cup) + "\n");
 						if(drinkaskcount==5){
-							client.rightwrite.put("othercup\n");
+							client.rightwrite.add("othercup\n");
 						}
 						if(state==State.waitingCup){
 							state=State.thristy;
 							drinkaskcount=5;
 						}
-						server.leftread.take();
+						server.leftread.pop();
 					} else if (peek.equals("chop")) {
-						client.leftwrite.put(String.valueOf(leftChop) + "\n");
-						server.leftread.take();
+						client.leftwrite.add(String.valueOf(leftChop) + "\n");
+						server.leftread.pop();
 					} else {
-						server.leftread.take();
+						server.leftread.pop();
 					}
 				}
 				while (!server.rightread.isEmpty()) {
@@ -107,50 +106,50 @@ public class main {
 						}
 					} else if (peek.equals("othertrue")) {
 						if (drinkaskcount == 5) {
-							client.leftwrite.put(peek + "\n");
+							client.leftwrite.add(peek + "\n");
 						} else {
 							state = State.thristy;
 							drinkaskcount=5;
 						}
-						server.rightread.take();
+						server.rightread.pop();
 					} else if (peek.equals("otherfalse")) {
 						if (drinkaskcount == 5) {
-							client.leftwrite.put(peek + "\n");
+							client.leftwrite.add(peek + "\n");
 						} else {
 							drinkaskcount--;
 						}
-						server.rightread.take();
+						server.rightread.pop();
 					} else if (peek.equals("cup")) {
-						client.rightwrite.put(String.valueOf(cup) + "\n");
-						client.leftwrite.put("othercup\n");
-						server.rightread.take();
+						client.rightwrite.add(String.valueOf(cup) + "\n");
+						client.leftwrite.add("othercup\n");
+						server.rightread.pop();
 					} else if (peek.equals("othercup")) {
-						client.rightwrite.put("other" + String.valueOf(cup)+ "\n");
+						client.rightwrite.add("other" + String.valueOf(cup)+ "\n");
 						if(drinkaskcount==5){
-							client.leftwrite.put("othercup\n");
+							client.leftwrite.add("othercup\n");
 						}
-						server.rightread.take();
+						server.rightread.pop();
 					} else if (peek.equals("chop")) {
-						client.rightwrite.put(String.valueOf(rightChop) + "\n");
-						server.rightread.take();
+						client.rightwrite.add(String.valueOf(rightChop) + "\n");
+						server.rightread.pop();
 					} else {
-						server.rightread.take();
+						server.rightread.pop();
 					}
 				}
 			}
 			if ((rand == 4 || rand == 6) && state == State.hungry) {
 				if (rand == 4) {
-					client.leftwrite.put("chop\n");
+					client.leftwrite.add("chop\n");
 					state = State.waitingLeftChop;
 				} else if (rand == 6) {
-					client.rightwrite.put("chop\n");
+					client.rightwrite.add("chop\n");
 					state = State.waitingRightChop;
 				}
 			} else if (state == State.waitingRightChop) {
 				if (server.rightread.isEmpty()) {
 					continue;
 				}
-				String s = server.rightread.take();
+				String s = server.rightread.pop();
 				if (s.contains("true")) {
 					state = State.hungry;
 					leftChop = false;
@@ -162,7 +161,7 @@ public class main {
 					} else {
 						rand = 4;
 						state=State.waitingLeftChop;
-						client.leftwrite.put("chop\n");
+						client.leftwrite.add("chop\n");
 						continue;
 					}
 				}
@@ -170,7 +169,7 @@ public class main {
 				if (server.leftread.isEmpty()) {
 					continue;
 				}
-				String s = server.leftread.take();
+				String s = server.leftread.pop();
 				if (s.contains("true")) {
 					state = State.hungry;
 					leftChop = false;
@@ -182,7 +181,7 @@ public class main {
 					} else {
 						rand = 6;
 						state=State.waitingRightChop;
-						client.rightwrite.put("chop\n");
+						client.rightwrite.add("chop\n");
 						continue;
 					}
 				}
@@ -196,7 +195,7 @@ public class main {
 				state = State.thristy;
 			} else if (rand == 5 && state == State.thristy) {
 				drinkaskcount--;
-				client.rightwrite.put("cup\n");
+				client.rightwrite.add("cup\n");
 				state = State.waitingCup;
 			} else if (drinkaskcount == 0 && state == State.waitingCup) {
 				cup = true;
@@ -224,9 +223,10 @@ public class main {
 				if (server.rightread.isEmpty()) {
 					continue;
 				}
-				String s = server.rightread.take();
+				String s = server.rightread.pop();
 				if (s.equals("true")) {
 					state = State.thristy;
+					drinkaskcount=5;
 				} else {
 					drinkaskcount--;
 				}

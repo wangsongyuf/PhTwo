@@ -7,11 +7,10 @@ import java.net.Socket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.util.ArrayDeque;
-import java.util.concurrent.LinkedBlockingQueue;
 
 public class Client implements Runnable {
-	public LinkedBlockingQueue<String> leftwrite = new LinkedBlockingQueue<>();
-	public LinkedBlockingQueue<String> rightwrite = new LinkedBlockingQueue<>();
+	public ArrayDeque<String> leftwrite = new ArrayDeque<>();
+	public ArrayDeque<String> rightwrite = new ArrayDeque<>();
 	String leftaddress, rightaddress;
 	int port;
 
@@ -40,16 +39,16 @@ public class Client implements Runnable {
 			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
 			System.out.println("start write");
 			while(true){
-//				if(leftwrite.size()>0||rightwrite.size()>0){
-//				System.out.println("---------------------------------------------------");
-//				for(String s:leftwrite){
-//					System.out.println("leftToWrite: "+s);
-//				}
-//				for(String s:rightwrite){
-//					System.out.println("rightToWrite: "+s);
-//				}
-//				System.out.println("---------------------------------------------------");
-//				}
+				if(leftwrite.size()>0||rightwrite.size()>0){
+				System.out.println("---------------------------------------------------");
+				for(String s:leftwrite){
+					System.out.println("leftToWrite: "+s);
+				}
+				for(String s:rightwrite){
+					System.out.println("rightToWrite: "+s);
+				}
+				System.out.println("---------------------------------------------------");
+				}
 			int count=0;
 			for (String s : leftwrite) {
 				count++;
@@ -59,7 +58,7 @@ public class Client implements Runnable {
 				
 			}
 			while(count!=0){
-				leftwrite.take();
+				leftwrite.pop();
 				count--;
 			}
 			 count=0;
@@ -69,7 +68,7 @@ public class Client implements Runnable {
 				rightOutputStr.writeBytes(s);
 			}
 			while(count!=0){
-				rightwrite.take();
+				rightwrite.pop();
 				count--;
 			}}
 		} catch (InterruptedException e) {
