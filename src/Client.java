@@ -20,52 +20,42 @@ public class Client implements Runnable {
 		this.port = port;
 	}
 
+	@SuppressWarnings("resource")
 	@Override
 	public void run() {
 		try {
 			Thread.sleep(10000L);
 
 			Socket leftSock = null;
-	DataOutputStream leftOutputStr = null;
+			DataOutputStream leftOutputStr = null;
 			BufferedReader leftInputStr = null;
-				Socket rightSock = null;
-		DataOutputStream rightOutputStr = null;
+			Socket rightSock = null;
+			DataOutputStream rightOutputStr = null;
 			BufferedReader rightInputStr = null;
 			leftSock = new Socket(leftaddress, port);
-				leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
+			leftOutputStr = new DataOutputStream(leftSock.getOutputStream());
 			leftInputStr = new BufferedReader(new InputStreamReader(leftSock.getInputStream()));
 			rightSock = new Socket(rightaddress, port);
 			rightOutputStr = new DataOutputStream(rightSock.getOutputStream());
 			rightInputStr = new BufferedReader(new InputStreamReader(rightSock.getInputStream()));
 
-			while(true){
-//				if(leftwrite.size()>0||rightwrite.size()>0){
-//				System.out.println("---------------------------------------------------");
-//				for(String s:leftwrite){
-//					System.out.println("leftToWrite: "+s);
-//				}
-//				for(String s:rightwrite){
-//					System.out.println("rightToWrite: "+s);
-//				}
-//				System.out.println("---------------------------------------------------");
-//				}
-			int count=0;
-			count = loopleft(leftOutputStr, count);
-			while(count!=0){
-				removeleft();
-				count--;
+			while (true) {
+				int count = 0;
+				count = loopleft(leftOutputStr, count);
+				while (count != 0) {
+					removeleft();
+					count--;
+				}
+				count = 0;
+				count = loopright(rightOutputStr, count);
+				while (count != 0) {
+					removeright();
+					count--;
+				}
 			}
-			 count=0;
-			count = loopright(rightOutputStr, count);
-			while(count!=0){
-				removeright();
-				count--;
-			}}
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -83,10 +73,9 @@ public class Client implements Runnable {
 	private synchronized int loopleft(DataOutputStream leftOutputStr, int count) throws IOException {
 		for (String s : leftwrite) {
 			count++;
-			
 
 			leftOutputStr.writeBytes(s);
-			
+
 		}
 		return count;
 	}
@@ -98,14 +87,15 @@ public class Client implements Runnable {
 	public synchronized String removeright() {
 		return rightwrite.pop();
 	}
-	
-	public synchronized  void  addleft(String s){
+
+	public synchronized void addleft(String s) {
 		leftwrite.add(s);
-		
+
 	}
-	public synchronized  void  addright(String s){
+
+	public synchronized void addright(String s) {
 		rightwrite.add(s);
-		
+
 	}
 
 }

@@ -25,16 +25,16 @@ class Server implements Runnable {
 		this.rightaddress = rightaddress;
 		this.port = port;
 	}
-	
-	public synchronized  void  addleft(String s){
+
+	public synchronized void addleft(String s) {
 		leftread.add(s);
-		
 	}
-	public synchronized  void  addright(String s){
+
+	public synchronized void addright(String s) {
 		rightread.add(s);
-		
+
 	}
-	
+
 	public synchronized String removeleft() {
 		return leftread.pop();
 	}
@@ -47,8 +47,6 @@ class Server implements Runnable {
 	public void run() {
 
 		try {
-
-		
 			Socket leftserver = null;
 			Socket rightserver = null;
 			ServerSocket servSock = null;
@@ -77,7 +75,6 @@ class Server implements Runnable {
 			rightinputStr = new BufferedReader(new InputStreamReader(rightserver.getInputStream()));
 			rightoutputStr = new DataOutputStream(rightserver.getOutputStream());
 
-
 			Thread t1 = new Thread(new Runnable() {
 
 				@Override
@@ -86,13 +83,9 @@ class Server implements Runnable {
 						String temp;
 						try {
 							temp = leftinputStr.readLine();
-//							System.out.println("*****************************************************");
-//							System.out.println("ReadLeftInput:"+temp);
-//							System.out.println("*****************************************************");
-								addleft(temp);
-							
+							addleft(temp);
+
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
@@ -107,13 +100,9 @@ class Server implements Runnable {
 						String temp;
 						try {
 							temp = rightinputStr.readLine();
-//							System.out.println("*****************************************************");
-//							System.out.println("ReadRightInput:"+temp);
-//							System.out.println("*****************************************************");
-								addright(temp);
-					
+							addright(temp);
+
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 
