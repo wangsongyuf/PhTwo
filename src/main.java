@@ -205,6 +205,10 @@ public class main {
 					continue;
 				}
 				String s = server.removeright();
+				if(s.contains("other")){
+					server.addright(s);
+					continue;
+				}
 				if (s.contains("true")) {
 					state = State.hungry;
 					leftChop = false;
@@ -226,6 +230,10 @@ public class main {
 					continue;
 				}
 				String s = server.removeleft();
+				if(s.contains("other")){
+					server.addleft(s);
+					continue;
+				}
 				if (s.contains("true")) {
 					state = State.hungry;
 					leftChop = false;
@@ -251,7 +259,7 @@ public class main {
 				state = State.thristy;
 			} else if (rand == 5 && state == State.thristy) {
 				drinkaskcount--;
-				client.rightwrite.add("cup\n");
+				client.addright("cup\n");
 				state = State.waitingCup;
 			} else if (drinkaskcount == 0 && state == State.waitingCup) {
 				cup = true;
@@ -281,6 +289,10 @@ public class main {
 					continue;
 				}
 				String s = server.removeright();
+				if(s.contains("other")){
+					server.addright(s);
+					continue;
+				}
 				if (s.equals("true")) {
 					state = State.thristy;
 					drinkaskcount=5;
