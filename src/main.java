@@ -27,6 +27,7 @@ public class main {
 	static int hungrycount = 40;
 	static int wait = 20;
 	static int waitingPlayingCount = 10;
+	static int playcount=20;
 
 	public static void main(String[] args) {
 		try {
@@ -65,6 +66,7 @@ public class main {
 						hungrycount = 40;
 						wait = 20;
 						waitingPlayingCount=10;
+						playcount=20;
 						if (input.equals("thinking")) {
 							state = State.thinking;
 
@@ -113,10 +115,9 @@ public class main {
 						if (peek.equals("true") || peek.equals("false")) {
 							if (state == State.waitingCup || state == State.waitingLeftChop) {
 								break;
-							}else if (state==state.waitingPlaying){
-								break;
 							}
-						} else if (peek.equals("othertrue")) {
+						} 
+						else if (peek.equals("othertrue")) {
 							if (drinkaskcount == 5) {
 								client.addright(peek + "\n");
 							} else {
@@ -162,6 +163,10 @@ public class main {
 						String peek = server.rightread.peek();
 						if (peek.equals("true") || peek.equals("false")) {
 							if (state == State.waitingCup || state == State.waitingRightChop) {
+								break;
+							}
+						}else if(peek.equals("sure")){
+							 if (state==state.waitingPlaying){
 								break;
 							}
 						} else if (peek.equals("othertrue")) {
@@ -339,6 +344,17 @@ public class main {
 					wait--;
 				} else {
 					wait = 20;
+				}
+				if(state==State.playing&& playcount>0){
+					playcount--;
+				}
+				else if(state==State.playing&& playcount<0){
+					leftChop = false;
+					rightChop = false;
+					cup = false;
+					drinktimecount = 40;
+					playcount=20;
+					state=State.thinking;
 				}
 
 				rand = r.nextInt(10);
