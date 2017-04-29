@@ -102,7 +102,7 @@ public class main {
 				System.out.println("State: " + state);
 				
 				if (state != State.sleeping) {
-					if (playingFlag && state != State.drinking && state != State.eating) {
+					if (playingFlag && state != State.drinking && state != State.eating&& state!=State.playing) {
 						playingFlag = false;
 						state = State.playing;
 						client.addleft("sure\n");
@@ -149,7 +149,7 @@ public class main {
 							server.removeleft();
 						} else if (peek.equals("play")) {
 							server.removeleft();
-							if (state == State.eating || state == State.drinking) {
+							if (state == State.eating || state == State.drinking||state==State.playing) {
 								playingFlag = true;
 							} else {
 								state = State.playing;
@@ -319,7 +319,21 @@ public class main {
 				} else if (state == State.thinking && rand == 7) {
 					state = State.waitingPlaying;
 					client.addright("play\n");
-				} else if (state == State.waitingPlaying) {
+				} 
+				else if(state==State.playing&& playcount>0){
+					playcount--;
+					continue;
+				}
+				else if(state==State.playing&& playcount<=0){
+					leftChop = false;
+					rightChop = false;
+					cup = false;
+					playcount=20;
+					state=State.thinking;
+					continue;
+				}
+				
+				else if (state == State.waitingPlaying) {
 					if (waitingPlayingCount == 0) {
 						client.addright("play\n");
 						waitingPlayingCount = 10;
@@ -345,17 +359,7 @@ public class main {
 				} else {
 					wait = 20;
 				}
-				if(state==State.playing&& playcount>0){
-					playcount--;
-				}
-				else if(state==State.playing&& playcount<0){
-					leftChop = false;
-					rightChop = false;
-					cup = false;
-					drinktimecount = 40;
-					playcount=20;
-					state=State.thinking;
-				}
+				
 
 				rand = r.nextInt(10);
 			}
