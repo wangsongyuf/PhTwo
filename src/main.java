@@ -26,7 +26,7 @@ public class main {
 	static int sleepcount = 40;
 	static int hungrycount = 40;
 	static int wait = 20;
-	static int waitingPlayingCount = 40;
+	static int waitingPlayingCount = 10;
 
 	public static void main(String[] args) {
 		try {
@@ -76,7 +76,10 @@ public class main {
 						} else if (input.equals("sleeping")) {
 							state = State.sleeping;
 						}
-
+						else if (input.equals("play")){
+							state = State.waitingPlaying;
+							client.addright("play\n");
+						}
 						else if (input.equals("gui")) {
 							gui.run();
 						}
@@ -140,6 +143,7 @@ public class main {
 							client.leftwrite.add(String.valueOf(leftChop) + "\n");
 							server.removeleft();
 						} else if (peek.equals("play")) {
+							System.out.println("receive play");
 							if (state == State.eating || state == State.drinking) {
 								playingFlag = true;
 							} else {
