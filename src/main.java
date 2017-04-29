@@ -13,18 +13,20 @@ import java.util.spi.CurrencyNameProvider;
 
 public class main {
 	public enum State {
-		thinking, hungry, eating, thristy, drinking, sleeping, waitingLeftChop, waitingRightChop, waitingCup
+		thinking, hungry, eating, thristy, drinking, sleeping, waitingLeftChop, waitingRightChop, waitingCup, playing, waitingPlaying
 	}
 
 	static boolean leftChop = false;
 	static boolean rightChop = false;
 	static boolean cup = false;
+	static boolean playingFlag = false;
 	static State state = State.thinking;
 	static int drinkaskcount = 5;
 	static int drinktimecount = 40;
 	static int sleepcount = 40;
 	static int hungrycount = 40;
 	static int wait = 20;
+	static int waitingPlayingCount = 40;
 
 	public static void main(String[] args) {
 		try {
@@ -92,6 +94,11 @@ public class main {
 			while (hungrycount > 0) {
 				Thread.sleep(1000L);
 				System.out.println("State: " + state);
+				if (playingFlag) {
+					playingFlag = false;
+					state = State.playing;
+					client.addleft("sure\n");
+				}
 				if (state != State.sleeping) {
 					while (!server.leftread.isEmpty()) {
 						String peek = server.leftread.peek();
@@ -132,6 +139,12 @@ public class main {
 						} else if (peek.equals("chop")) {
 							client.leftwrite.add(String.valueOf(leftChop) + "\n");
 							server.removeleft();
+						} else if (peek.equals("play")) {
+							if (state == State.eating || state == State.drinking) {
+								playingFlag = true;
+							}
+							state = State.playing;
+							client.addleft("sure\n");
 						} else {
 							server.removeleft();
 						}
@@ -287,6 +300,29 @@ public class main {
 					hungrycount--;
 				} else if (state == State.eating) {
 					hungrycount = 40;
+				} else if (state == State.thinking && rand == 7) {
+					state = State.waitingPlaying;
+					client.addright("play\n");
+				} else if (state == State.waitingPlaying) {
+					if (waitingPlayingCount == 0) {
+						client.addright("play\n");
+						waitingPlayingCount = 40;
+					}
+					if (server.rightread.isEmpty()) {
+						waitingPlayingCount--;
+						continue;
+					}
+					String s = server.removeright();
+					if (s.contains("sure")) {
+						state = State.playing;
+						leftChop = false;
+						rightChop = false;
+						cup = false;
+						waitingPlayingCount = 40;
+					} else {
+						waitingPlayingCount--;
+						continue;
+					}
 				}
 				if (state == State.waitingCup || state == State.waitingLeftChop || state == State.waitingRightChop) {
 					wait--;
@@ -299,7 +335,9 @@ public class main {
 
 			System.out.println("RIP");
 
-		} catch (Exception e) {
+		} catch (
+
+		Exception e) {
 			e.printStackTrace();
 		}
 
