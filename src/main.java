@@ -140,13 +140,15 @@ public class main {
 
 							server.removeleft();
 						} else if (peek.equals("chop")) {
-							client.leftwrite.add(String.valueOf(leftChop) + "\n");
+							client.addleft(String.valueOf(leftChop) + "\n");
 							server.removeleft();
 						} else if (peek.equals("play")) {
-							System.out.println("receive play");
+							server.removeleft();
 							if (state == State.eating || state == State.drinking) {
 								playingFlag = true;
+								System.out.println("not change");
 							} else {
+								System.out.println("change");
 								state = State.playing;
 								client.addleft("sure\n");
 							}
