@@ -94,7 +94,7 @@ public class main {
 			while (hungrycount > 0) {
 				Thread.sleep(1000L);
 				System.out.println("State: " + state);
-				if (playingFlag) {
+				if (playingFlag && state != State.drinking && state != State.eating) {
 					playingFlag = false;
 					state = State.playing;
 					client.addleft("sure\n");
@@ -142,9 +142,10 @@ public class main {
 						} else if (peek.equals("play")) {
 							if (state == State.eating || state == State.drinking) {
 								playingFlag = true;
+							} else {
+								state = State.playing;
+								client.addleft("sure\n");
 							}
-							state = State.playing;
-							client.addleft("sure\n");
 						} else {
 							server.removeleft();
 						}
