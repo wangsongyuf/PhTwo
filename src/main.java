@@ -113,6 +113,8 @@ public class main {
 						if (peek.equals("true") || peek.equals("false")) {
 							if (state == State.waitingCup || state == State.waitingLeftChop) {
 								break;
+							}else if (state==state.waitingPlaying){
+								break;
 							}
 						} else if (peek.equals("othertrue")) {
 							if (drinkaskcount == 5) {
