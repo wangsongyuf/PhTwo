@@ -36,7 +36,7 @@ public class main {
 			int port;
 
 			if (args.length != 3) {
-				System.out.println("bad inadd");
+				System.out.println("bad input");
 			}
 			leftaddress = args[0];
 			rightaddress = args[1];
@@ -64,6 +64,7 @@ public class main {
 						sleepcount = 40;
 						hungrycount = 40;
 						wait = 20;
+						waitingPlayingCount=10;
 						if (input.equals("thinking")) {
 							state = State.thinking;
 
@@ -97,12 +98,13 @@ public class main {
 			while (hungrycount > 0) {
 				Thread.sleep(1000L);
 				System.out.println("State: " + state);
-				if (playingFlag && state != State.drinking && state != State.eating) {
-					playingFlag = false;
-					state = State.playing;
-					client.addleft("sure\n");
-				}
+				
 				if (state != State.sleeping) {
+					if (playingFlag && state != State.drinking && state != State.eating) {
+						playingFlag = false;
+						state = State.playing;
+						client.addleft("sure\n");
+					}
 					while (!server.leftread.isEmpty()) {
 						String peek = server.leftread.peek();
 						// System.out.println("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
@@ -146,9 +148,7 @@ public class main {
 							server.removeleft();
 							if (state == State.eating || state == State.drinking) {
 								playingFlag = true;
-								System.out.println("not change");
 							} else {
-								System.out.println("change");
 								state = State.playing;
 								client.addleft("sure\n");
 							}
@@ -205,6 +205,8 @@ public class main {
 					sleepcount = 40;
 					hungrycount = 40;
 					wait = 20;
+					waitingPlayingCount = 10;
+					
 					state = State.thinking;
 				}
 				if ((rand == 4 || rand == 6) && state == State.hungry) {
@@ -313,7 +315,7 @@ public class main {
 				} else if (state == State.waitingPlaying) {
 					if (waitingPlayingCount == 0) {
 						client.addright("play\n");
-						waitingPlayingCount = 40;
+						waitingPlayingCount = 10;
 					}
 					if (server.rightread.isEmpty()) {
 						waitingPlayingCount--;
@@ -325,7 +327,7 @@ public class main {
 						leftChop = false;
 						rightChop = false;
 						cup = false;
-						waitingPlayingCount = 40;
+						waitingPlayingCount = 10;
 					} else {
 						waitingPlayingCount--;
 						continue;
