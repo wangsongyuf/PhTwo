@@ -48,6 +48,7 @@ public class main {
 			Thread t2 = new Thread(client);
 			t1.start();
 			t2.start();
+	
 
 			Thread t3 = new Thread(new Runnable() {
 
@@ -67,6 +68,7 @@ public class main {
 						wait = 20;
 						waitingPlayingCount=10;
 						playcount=20;
+						
 						if (input.equals("thinking")) {
 							state = State.thinking;
 

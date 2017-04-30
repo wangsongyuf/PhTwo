@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Console;
+import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -53,6 +55,8 @@ public class gui {
 				main.sleepcount = 40;
 				main.hungrycount = 40;
 				main.wait = 20;
+				 main.waitingPlayingCount = 10;
+				main.playcount=20;
 			}
 		});
 		frame.getContentPane().add(btnNewButton, BorderLayout.WEST);
@@ -69,6 +73,8 @@ public class gui {
 				main.sleepcount = 40;
 				main.hungrycount = 40;
 				main.wait = 20;
+				 main.waitingPlayingCount = 10;
+					main.playcount=20;
 			}
 		});
 		frame.getContentPane().add(btnNewButton_1, BorderLayout.EAST);
@@ -85,6 +91,8 @@ public class gui {
 				main.sleepcount = 40;
 				main.hungrycount = 40;
 				main.wait = 20;
+				 main.waitingPlayingCount = 10;
+					main.playcount=20;
 			}
 		});
 		frame.getContentPane().add(btnThi, BorderLayout.NORTH);
@@ -101,9 +109,29 @@ public class gui {
 				main.sleepcount = 40;
 				main.hungrycount = 40;
 				main.wait = 20;
+				 main.waitingPlayingCount = 10;
+					main.playcount=20;
 			}
 		});
 		frame.getContentPane().add(btnSleeping, BorderLayout.SOUTH);
+		
+		JButton btnPlay = new JButton("Play");
+		btnPlay.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				main.state = main.State.waitingPlaying;
+				main.leftChop = false;
+				main.rightChop = false;
+				main.cup = false;
+				main.drinkaskcount = 5;
+				main.drinktimecount = 40;
+				main.sleepcount = 40;
+				main.hungrycount = 40;
+				main.wait = 20;
+				 main.waitingPlayingCount = 10;
+					main.playcount=20;
+			}
+		});
+		frame.getContentPane().add(btnPlay, BorderLayout.CENTER);
 	}
 
 }
